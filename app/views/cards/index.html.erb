@@ -1,0 +1,95 @@
+<h1>Listing cards</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Layout</th>
+      <th>Type</th>
+      <th>Types</th>
+      <th>Colors</th>
+      <th>Name</th>
+      <th>Rarity</th>
+      <th>Cmc</th>
+      <th>Mana cost</th>
+      <th>Text</th>
+      <th>Flavor</th>
+      <th>Artist</th>
+      <th>Rulings</th>
+      <th>Legalities</th>
+      <th>Number</th>
+      <th>Foreign names</th>
+      <th>Source</th>
+      <th>Image name</th>
+      <th>Printings</th>
+      <th>Release date</th>
+      <th>Subtypes</th>
+      <th>Power</th>
+      <th>Toughness</th>
+      <th>Names</th>
+      <th>Supertypes</th>
+      <th>Multiverseid</th>
+      <th>Original type</th>
+      <th>Original text</th>
+      <th>Variations</th>
+      <th>Reserved</th>
+      <th>Loyalty</th>
+      <th>Border</th>
+      <th>Watermark</th>
+      <th>Timeshifted</th>
+      <th>Starter</th>
+      <th>Hand</th>
+      <th>Life</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @cards.each do |card| %>
+      <tr>
+        <td><%= card.layout %></td>
+        <td><%= card.type %></td>
+        <td><%= card.types %></td>
+        <td><%= card.colors %></td>
+        <td><%= card.name %></td>
+        <td><%= card.rarity %></td>
+        <td><%= card.cmc %></td>
+        <td><%= card.mana_cost %></td>
+        <td><%= card.text %></td>
+        <td><%= card.flavor %></td>
+        <td><%= card.artist %></td>
+        <td><%= card.rulings %></td>
+        <td><%= card.legalities %></td>
+        <td><%= card.number %></td>
+        <td><%= card.foreign_names %></td>
+        <td><%= card.source %></td>
+        <td><%= card.image_name %></td>
+        <td><%= card.printings %></td>
+        <td><%= card.release_date %></td>
+        <td><%= card.subtypes %></td>
+        <td><%= card.power %></td>
+        <td><%= card.toughness %></td>
+        <td><%= card.names %></td>
+        <td><%= card.supertypes %></td>
+        <td><%= card.multiverseid %></td>
+        <td><%= card.original_type %></td>
+        <td><%= card.original_text %></td>
+        <td><%= card.variations %></td>
+        <td><%= card.reserved %></td>
+        <td><%= card.loyalty %></td>
+        <td><%= card.border %></td>
+        <td><%= card.watermark %></td>
+        <td><%= card.timeshifted %></td>
+        <td><%= card.starter %></td>
+        <td><%= card.hand %></td>
+        <td><%= card.life %></td>
+        <td><%= link_to 'Show', card %></td>
+        <td><%= link_to 'Edit', edit_card_path(card) %></td>
+        <td><%= link_to 'Destroy', card, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Card', new_card_path %>

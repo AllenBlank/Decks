@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyText
+  code: MyText
+  magic_rarities_codes: MyText
+  release_date: MyText
+  border: MyText
+  type: MyText
+  cards: MyText
+  old_code: MyText
+  gatherer_code: MyText
+  block: MyText
+  booster: MyText
+  online_only: false
+
+two:
+  name: MyText
+  code: MyText
+  magic_rarities_codes: MyText
+  release_date: MyText
+  border: MyText
+  type: MyText
+  cards: MyText
+  old_code: MyText
+  gatherer_code: MyText
+  block: MyText
+  booster: MyText
+  online_only: false

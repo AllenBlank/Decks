@@ -1,0 +1,65 @@
+<%= form_for(@expansion) do |f| %>
+  <% if @expansion.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@expansion.errors.count, "error") %> prohibited this expansion from being saved:</h2>
+
+      <ul>
+      <% @expansion.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_area :name %>
+  </div>
+  <div class="field">
+    <%= f.label :code %><br>
+    <%= f.text_area :code %>
+  </div>
+  <div class="field">
+    <%= f.label :magic_rarities_codes %><br>
+    <%= f.text_area :magic_rarities_codes %>
+  </div>
+  <div class="field">
+    <%= f.label :release_date %><br>
+    <%= f.text_area :release_date %>
+  </div>
+  <div class="field">
+    <%= f.label :border %><br>
+    <%= f.text_area :border %>
+  </div>
+  <div class="field">
+    <%= f.label :type %><br>
+    <%= f.text_area :type %>
+  </div>
+  <div class="field">
+    <%= f.label :cards %><br>
+    <%= f.text_area :cards %>
+  </div>
+  <div class="field">
+    <%= f.label :old_code %><br>
+    <%= f.text_area :old_code %>
+  </div>
+  <div class="field">
+    <%= f.label :gatherer_code %><br>
+    <%= f.text_area :gatherer_code %>
+  </div>
+  <div class="field">
+    <%= f.label :block %><br>
+    <%= f.text_area :block %>
+  </div>
+  <div class="field">
+    <%= f.label :booster %><br>
+    <%= f.text_area :booster %>
+  </div>
+  <div class="field">
+    <%= f.label :online_only %><br>
+    <%= f.check_box :online_only %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

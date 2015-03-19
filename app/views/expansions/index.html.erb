@@ -1,0 +1,47 @@
+<h1>Listing expansions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Code</th>
+      <th>Magic rarities codes</th>
+      <th>Release date</th>
+      <th>Border</th>
+      <th>Type</th>
+      <th>Cards</th>
+      <th>Old code</th>
+      <th>Gatherer code</th>
+      <th>Block</th>
+      <th>Booster</th>
+      <th>Online only</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @expansions.each do |expansion| %>
+      <tr>
+        <td><%= expansion.name %></td>
+        <td><%= expansion.code %></td>
+        <td><%= expansion.magic_rarities_codes %></td>
+        <td><%= expansion.release_date %></td>
+        <td><%= expansion.border %></td>
+        <td><%= expansion.type %></td>
+        <td><%= expansion.cards %></td>
+        <td><%= expansion.old_code %></td>
+        <td><%= expansion.gatherer_code %></td>
+        <td><%= expansion.block %></td>
+        <td><%= expansion.booster %></td>
+        <td><%= expansion.online_only %></td>
+        <td><%= link_to 'Show', expansion %></td>
+        <td><%= link_to 'Edit', edit_expansion_path(expansion) %></td>
+        <td><%= link_to 'Destroy', expansion, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Expansion', new_expansion_path %>

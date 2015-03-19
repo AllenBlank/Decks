@@ -1,0 +1,64 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @expansion.name %>
+</p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @expansion.code %>
+</p>
+
+<p>
+  <strong>Magic rarities codes:</strong>
+  <%= @expansion.magic_rarities_codes %>
+</p>
+
+<p>
+  <strong>Release date:</strong>
+  <%= @expansion.release_date %>
+</p>
+
+<p>
+  <strong>Border:</strong>
+  <%= @expansion.border %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @expansion.type %>
+</p>
+
+<p>
+  <strong>Cards:</strong>
+  <%= @expansion.cards %>
+</p>
+
+<p>
+  <strong>Old code:</strong>
+  <%= @expansion.old_code %>
+</p>
+
+<p>
+  <strong>Gatherer code:</strong>
+  <%= @expansion.gatherer_code %>
+</p>
+
+<p>
+  <strong>Block:</strong>
+  <%= @expansion.block %>
+</p>
+
+<p>
+  <strong>Booster:</strong>
+  <%= @expansion.booster %>
+</p>
+
+<p>
+  <strong>Online only:</strong>
+  <%= @expansion.online_only %>
+</p>
+
+<%= link_to 'Edit', edit_expansion_path(@expansion) %> |
+<%= link_to 'Back', expansions_path %>
