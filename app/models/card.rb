@@ -1,4 +1,7 @@
 class Card < ActiveRecord::Base
+  
+  belongs_to :expansion
+  
   serialize :types
   serialize :colors
   serialize :rulings

@@ -1,9 +1,13 @@
 # this works so far...
+# changed the path afterwards, not 100% sure it'll work.
 # checks all the set files and then creates expansion objects for each..
-# adds all cards in that expansion, and links them.
+count = 0
 path = Rails.root.to_s + '/db/all_sets/'
 Dir.foreach(path) do |file_name|
   next if file_name == '.' or file_name == '..'
+  
+  count += 1
+  break if count > 1
   
   json = File.new( path + file_name, 'r')
   hash = JSON.parse(json.read)
