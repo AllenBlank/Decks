@@ -20,7 +20,7 @@ gem 'responders',           '~> 2.0'
 gem 'omniauth-facebook',    '~> 2.0'
 gem 'omniauth-google-oauth2'
 gem 'json',                 '~> 1.8.1'
-gem 'aws-sdk',              '~> 2'
+gem 'aws-sdk',              '~> 1'
 
 gem 'sdoc',                    '0.4.0', group: :doc
 
