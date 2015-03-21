@@ -29,9 +29,13 @@ class Card < ActiveRecord::Base
     # if there is no multi-verse id or the site doesn't have the image, set to 
     # default... the card back image.
     
-    unless card.multiverseid && url_works( remote_url )
+    if !card.multiverseid || !url_works( remote_url )
       card.update image_url: default_url
       return default_url
+  
+    elsif url_works( aws_url )
+        card.update image_url: aws_url
+        return aws_url
     else
     
     # if there is a multiverse id, and the image exists, try to fetch it and upload,

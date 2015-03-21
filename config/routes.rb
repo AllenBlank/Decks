@@ -6,10 +6,7 @@ Rails.application.routes.draw do
   end
   
   
-  resources :cards do
-    get :autocomplete_card_name, :on => :collection
-  end
-  
+  resources :cards 
   resources :expansions
 
 end
