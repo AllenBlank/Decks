@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150320194023) do
+ActiveRecord::Schema.define(version: 20150321044536) do
 
   create_table "cards", force: true do |t|
     t.text     "layout"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 20150320194023) do
     t.datetime "updated_at"
     t.integer  "expansion_id"
     t.string   "image_url"
+    t.boolean  "newest",        default: true
   end
 
   add_index "cards", ["expansion_id"], name: "index_cards_on_expansion_id"

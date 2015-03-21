@@ -21,6 +21,8 @@ gem 'omniauth-facebook',    '~> 2.0'
 gem 'omniauth-google-oauth2'
 gem 'json',                 '~> 1.8.1'
 gem 'aws-sdk',              '~> 1'
+gem 'rails4-autocomplete'
+gem "jquery-ui-rails"
 
 gem 'sdoc',                    '0.4.0', group: :doc
 
