@@ -7,7 +7,7 @@ class CardsController < ApplicationController
     @search = params[:search]
     if @search
       @search.downcase!
-      @cards = Card.where("name LIKE ?", "%#{@search}%").where(newest: true)
+      @cards = Card.where("lower(name) LIKE ?", "%#{@search}%").where(newest: true)
                .paginate(page: params[:page], per_page: 5)
     else
       @cards = Card.paginate(page: params[:page], per_page: 5)
