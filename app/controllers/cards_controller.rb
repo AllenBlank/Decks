@@ -5,7 +5,7 @@ class CardsController < ApplicationController
   # GET /cards.json
   def index
     @search = params[:search]
-    if search
+    if @search
       @search.downcase!
       @cards = Card.where("name LIKE ?", "%#{@search}%").where(newest: true)
                .paginate(page: params[:page], per_page: 5)
