@@ -16,3 +16,5 @@
 //= require autocomplete-rails
 //= require turbolinks
 //= require_tree .
+
+var change = true;
