@@ -1,63 +1,26 @@
 class CardsController < ApplicationController
-  before_action :set_card, only: [:show, :edit, :update, :destroy]
+  before_action :set_card, only: [:show]
 
   # GET /cards
   # GET /cards.json
   def index
-    @cards = Card.all
+    @search = params[:search]
+    if search
+      @search.downcase!
+      @cards = Card.where("name LIKE ?", "%#{@search}%").where(newest: true)
+               .paginate(page: params[:page], per_page: 5)
+    else
+      @cards = Card.paginate(page: params[:page], per_page: 5)
+    end
+    redirect_to @cards.first if @cards.count == 1
   end
 
   # GET /cards/1
   # GET /cards/1.json
   def show
-  end
-
-  # GET /cards/new
-  def new
-    @card = Card.new
-  end
-
-  # GET /cards/1/edit
-  def edit
-  end
-
-  # POST /cards
-  # POST /cards.json
-  def create
-    @card = Card.new(card_params)
-
     respond_to do |format|
-      if @card.save
-        format.html { redirect_to @card, notice: 'Card was successfully created.' }
-        format.json { render :show, status: :created, location: @card }
-      else
-        format.html { render :new }
-        format.json { render json: @card.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /cards/1
-  # PATCH/PUT /cards/1.json
-  def update
-    respond_to do |format|
-      if @card.update(card_params)
-        format.html { redirect_to @card, notice: 'Card was successfully updated.' }
-        format.json { render :show, status: :ok, location: @card }
-      else
-        format.html { render :edit }
-        format.json { render json: @card.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /cards/1
-  # DELETE /cards/1.json
-  def destroy
-    @card.destroy
-    respond_to do |format|
-      format.html { redirect_to cards_url, notice: 'Card was successfully destroyed.' }
-      format.json { head :no_content }
+      format.html
+      format.json { render json: @card }
     end
   end
 
@@ -66,9 +29,5 @@ class CardsController < ApplicationController
     def set_card
       @card = Card.find(params[:id])
     end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def card_params
-      params.require(:card).permit(:layout, :type, :types, :colors, :name, :rarity, :cmc, :mana_cost, :text, :flavor, :artist, :rulings, :legalities, :number, :foreign_names, :source, :image_name, :printings, :release_date, :subtypes, :power, :toughness, :names, :supertypes, :multiverseid, :original_type, :original_text, :variations, :reserved, :loyalty, :border, :watermark, :timeshifted, :starter, :hand, :life)
-    end
+    
 end

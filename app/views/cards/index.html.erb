@@ -1,5 +1,5 @@
 <h1>Listing cards</h1>
-
+<%= will_paginate inner_window: 0, outer_window: 0, previous_label: '←', next_label: '→'  %>
 <table>
   <thead>
     <tr>
@@ -27,7 +27,7 @@
       <th>Toughness</th>
       <th>Names</th>
       <th>Supertypes</th>
-      <th>Multiverseid</th>
+      <th>Multiverse ID</th>
       <th>Original type</th>
       <th>Original text</th>
       <th>Variations</th>
@@ -70,7 +70,7 @@
         <td><%= card.toughness %></td>
         <td><%= card.names %></td>
         <td><%= card.supertypes %></td>
-        <td><%= card.multiverseid %></td>
+        <td><%= card.multiverse_id %></td>
         <td><%= card.original_type %></td>
         <td><%= card.original_text %></td>
         <td><%= card.variations %></td>
@@ -83,13 +83,9 @@
         <td><%= card.hand %></td>
         <td><%= card.life %></td>
         <td><%= link_to 'Show', card %></td>
-        <td><%= link_to 'Edit', edit_card_path(card) %></td>
-        <td><%= link_to 'Destroy', card, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'New Card', new_card_path %>

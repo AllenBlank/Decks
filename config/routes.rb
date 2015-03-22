@@ -6,7 +6,8 @@ Rails.application.routes.draw do
   end
   
   
-  resources :cards 
-  resources :expansions
+  resources :cards, only: [:index, :show]
+  
+  resources :expansions, only: [:index, :show]
 
 end
