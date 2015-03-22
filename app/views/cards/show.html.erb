@@ -2,7 +2,8 @@
 
 <p>
   <strong>Image:</strong>
-  <%= image_tag @card.serve_image_url %>
+  <%= image_tag @card.high_res_url %>
+  <%= image_tag @card.low_res_url %>
 </p>
 
 
@@ -127,8 +128,8 @@
 </p>
 
 <p>
-  <strong>Multiverseid:</strong>
-  <%= @card.multiverseid %>
+  <strong>Multiverse ID:</strong>
+  <%= @card.multiverse_id %>
 </p>
 
 <p>

@@ -24,7 +24,11 @@ Dir.foreach(path) do |file_name|
   hash["cards"].each do |card|
     card_update_hash = {}
     card.each do |k,v|
+      if k == "imageName"
+        v = "#{new_exp.code}#{v}".gsub(' ','').underscore
+      end
       k = 'card_type' if k == 'type'
+      k = 'multiverse_id' if k == 'multiverseid'
       property = k.underscore.to_sym
       card_update_hash[property] = v
     end

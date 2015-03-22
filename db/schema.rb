@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150321044536) do
+ActiveRecord::Schema.define(version: 20150322170152) do
 
   create_table "cards", force: true do |t|
     t.text     "layout"
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 20150321044536) do
     t.text     "toughness"
     t.text     "names"
     t.text     "supertypes"
-    t.integer  "multiverseid"
+    t.integer  "multiverse_id"
     t.text     "original_type"
     t.text     "original_text"
     t.text     "variations"
@@ -53,8 +53,8 @@ ActiveRecord::Schema.define(version: 20150321044536) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "expansion_id"
-    t.string   "image_url"
     t.boolean  "newest",        default: true
+    t.boolean  "uploaded"
   end
 
   add_index "cards", ["expansion_id"], name: "index_cards_on_expansion_id"
