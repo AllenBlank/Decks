@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150323010148) do
+ActiveRecord::Schema.define(version: 20150323213230) do
 
   create_table "cards", force: true do |t|
     t.text     "layout"
@@ -58,6 +58,34 @@ ActiveRecord::Schema.define(version: 20150323010148) do
   end
 
   add_index "cards", ["expansion_id"], name: "index_cards_on_expansion_id"
+  add_index "cards", ["name"], name: "index_cards_on_name"
+  add_index "cards", ["newest"], name: "index_cards_on_newest"
+
+  create_table "cards_decks", id: false, force: true do |t|
+    t.integer "card_id"
+    t.integer "deck_id"
+  end
+
+  add_index "cards_decks", ["card_id"], name: "index_cards_decks_on_card_id"
+  add_index "cards_decks", ["deck_id"], name: "index_cards_decks_on_deck_id"
+
+  create_table "cards_sideboards", id: false, force: true do |t|
+    t.integer "card_id"
+    t.integer "sideboard_id"
+  end
+
+  add_index "cards_sideboards", ["card_id"], name: "index_cards_sideboards_on_card_id"
+  add_index "cards_sideboards", ["sideboard_id"], name: "index_cards_sideboards_on_sideboard_id"
+
+  create_table "decks", force: true do |t|
+    t.integer  "user_id"
+    t.string   "format"
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "commander"
+  end
 
   create_table "expansions", force: true do |t|
     t.text     "name"
@@ -74,6 +102,14 @@ ActiveRecord::Schema.define(version: 20150323010148) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "sideboards", force: true do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "deck_id"
+  end
+
+  add_index "sideboards", ["deck_id"], name: "index_sideboards_on_deck_id"
 
   create_table "users", force: true do |t|
     t.string   "provider"

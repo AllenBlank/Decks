@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @deck.user_id %>
+</p>
+
+<p>
+  <strong>Format:</strong>
+  <%= @deck.format %>
+</p>
+
+<p>
+  <strong>Commander:</strong>
+  <%= @deck.commander_id %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @deck.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @deck.description %>
+</p>
+
+<%= link_to 'Edit', edit_deck_path(@deck) %> |
+<%= link_to 'Back', decks_path %>

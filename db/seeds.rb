@@ -25,7 +25,7 @@ Dir.foreach(path) do |file_name|
     card_update_hash = {}
     card.each do |k,v|
       if k == "imageName"
-        v = "#{new_exp.code}#{v}".gsub(' ','').underscore
+        v = "#{new_exp.code.downcase}_#{v}".gsub(' ','_')
       end
       k = 'card_type' if k == 'type'
       k = 'multiverse_id' if k == 'multiverseid'
@@ -39,4 +39,38 @@ Dir.foreach(path) do |file_name|
     new_card.save
   end
 
+end
+
+#Tag cards as the newest
+
+all_names = []
+
+Card.find_each do |card|
+  all_names << card.name
+end
+
+unique_names = all_names.uniq
+
+non_unique_names = all_names
+
+unique_names.each do |name|
+  i = non_unique_names.index name
+  non_unique_names[i] = nil
+end
+
+non_unique_names.compact!
+non_unique_names.uniq!
+
+
+non_unique_names.each do |name|
+  Card.where(name: name).update_all(newest: false)
+  
+  printings = Card.where(name: name)
+  
+  printings = printings.sort_by do |printing|
+    printing.expansion.release_date.to_date
+  end
+  
+  printings.last.update(newest: true)
+  
 end
