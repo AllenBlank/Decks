@@ -35,13 +35,10 @@
         <td><%= expansion.booster %></td>
         <td><%= expansion.online_only %></td>
         <td><%= link_to 'Show', expansion %></td>
-        <td><%= link_to 'Edit', edit_expansion_path(expansion) %></td>
-        <td><%= link_to 'Destroy', expansion, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'New Expansion', new_expansion_path %>
