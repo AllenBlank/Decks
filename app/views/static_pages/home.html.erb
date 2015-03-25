@@ -1,14 +1,19 @@
 <div id="search-container" class="row">
   <div id="search-field" class="col-md-4">
-    <h1>Card Search</h1>
-    <%=
-    form_tag cards_path, method: 'get', id: 'autocomplete-cards' do
-      autocomplete_field_tag :search, '', autocomplete_card_name_cards_path, 
-        #size: 75, 
-        'data-auto-focus' => true,
-        update_elements: {}
-    end
-    %>
+    <h1>Search</h1>
+    
+    <%= form_tag cards_path, method: 'get', id: 'autocomplete-cards' do %>
+      
+        <%= autocomplete_field_tag :card_name, '', autocomplete_card_name_cards_path, 
+          'data-auto-focus' => true,
+          update_elements: {},
+          placeholder: 'Card Name'
+          
+        %>
+        <%= text_field_tag :card_text, nil, placeholder: "Card Text" %>
+        <%= submit_tag "", id: 'search-submit', style: "display: none;" %>
+    <% end %>
+   
   </div>
   <div id="card-preview"class="col-md-8">
     <%= render Card.find_by_name("Muddle the Mixture") %>

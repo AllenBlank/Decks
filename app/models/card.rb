@@ -15,11 +15,13 @@ class Card < ActiveRecord::Base
   serialize :variations
   
   def low_res_url
-    image_url 'low'
+    #image_url 'low'
+    DEFAULT_IMAGE_URL
   end
   
   def high_res_url
-    image_url 'high'
+    #image_url 'high'
+    DEFAULT_IMAGE_URL
   end
   
   private
