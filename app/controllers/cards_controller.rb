@@ -1,6 +1,12 @@
 class CardsController < ApplicationController
   before_action :set_card, only: [:show]
 
+  autocomplete :card, :name, limit: 10
+  def get_autocomplete_items(parameters)
+    items = super(parameters)
+    items.where(newest: true)
+  end
+  
   # GET /cards
   # GET /cards.json
   def index
@@ -9,9 +15,9 @@ class CardsController < ApplicationController
       @search.downcase!
       @cards = Card.where("lower(name) LIKE ?", "%#{@search}%")
                .where(newest: true)
-               .paginate(page: params[:page], per_page: 5)
+               .paginate(page: params[:page], per_page: 10)
     else
-      @cards = Card.paginate(page: params[:page], per_page: 5)
+      @cards = Card.paginate(page: params[:page], per_page: 10)
     end
     redirect_to @cards.first if @cards.count == 1
   end
@@ -19,10 +25,6 @@ class CardsController < ApplicationController
   # GET /cards/1
   # GET /cards/1.json
   def show
-    respond_to do |format|
-      format.html
-      format.json { render json: @card }
-    end
   end
 
   private

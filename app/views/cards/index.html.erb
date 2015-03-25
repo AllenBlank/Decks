@@ -1,13 +1,15 @@
-<h1>Listing cards</h1>
-<%= will_paginate inner_window: 0, outer_window: 0, previous_label: '←', next_label: '→'  %>
-<table>
-  <tbody>
-    <% @cards.each do |card| %>
-      <tr>
-        <td><%= link_to image_tag( card.low_res_url ), card %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<%= will_paginate inner_window: 1, outer_window: 1, previous_label: '←', next_label: '→'  %>
 
-<br>
+<div class="container">
+<% @cards.in_groups_of( 2, false) do |card_row| %>
+  <div class="row">
+  <% card_row.each do |card| %>
+    <div class="col-sm-6">
+      <%= render card %>
+    </div>
+  <% end %>
+  </div>
+<% end %>
+</div>
+
+<%= will_paginate inner_window: 1, outer_window: 1, previous_label: '←', next_label: '→'  %>

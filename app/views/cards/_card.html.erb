@@ -1,0 +1,26 @@
+<div class="card-container">
+  <div class="row">
+    <div class="card-title col-sm-12">
+      <h1>
+        <%= link_to card.name, card%>
+      </h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 card-image">
+      <%= link_to image_tag( card.high_res_url ), card %>
+    </div>
+    <div class="col-sm-6 card-attr">
+      <table>
+        <tr>
+          <th>Type:</th>
+          <td><%= card.card_type %></td>
+        </tr>
+        <tr>
+          <th>Text:</th>
+          <td><%= card.text %></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

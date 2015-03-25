@@ -9,11 +9,11 @@ Rails.application.routes.draw do
   get 'signin/facebook', to: redirect('auth/facebook'), as: 'facebook_signin'
   get 'signin/google', to: redirect('auth/google_oauth2'), as: 'google_signin'
   
-  resources :static_pages do
+  get 'about', to: 'static_pages#about', as: 'about'
+  
+  resources :cards, only: [:index, :show] do
     get :autocomplete_card_name, :on => :collection
   end
-  
-  resources :cards, only: [:index, :show]
   resources :expansions, only: [:index, :show]
 
 end

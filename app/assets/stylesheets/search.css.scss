@@ -1,0 +1,19 @@
+#autocomplete-cards {
+  input {
+    width: 75%;
+  }
+}
+
+.pagination {
+  li {
+    a, a:hover {
+      color: #333333;
+    }
+  }
+  li.active {
+    a, a:hover{
+      border-color: #ddd;
+      background-color: #555555;
+    }
+  }
+}

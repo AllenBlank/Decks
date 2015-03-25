@@ -1,0 +1,21 @@
+.card-container {
+  .card-image {
+    img {
+      width: 100%;
+    }
+  }
+  .card-attr {
+    padding-top: 1em;
+    table {
+      border-collapse: separate;
+      border-spacing: 0 1em;
+      th {
+        text-align: right;
+        vertical-align: top;
+      }
+      td {
+        padding-left: 1em;
+      }
+    }
+  }
+}

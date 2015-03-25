@@ -3,3 +3,24 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import url(https://fonts.googleapis.com/css?family=Lobster|Bree+Serif&subset=latin,latin-ext);
+html, body {
+  height: 100%;
+}
+body {
+  a.navbar-brand {
+    font-family: 'Lobster', cursive;
+    font-weight: bold;
+    font-size: 1.5em;
+    color: #333333;
+  }
+  a, a:hover {
+    color: #333333;
+  }
+  font-family: 'Bree Serif', serif;
+  font-size: 16px;
+
+  // background-image: image-url("spatter.png");;
+  // background-repeat: no-repeat;
+  // background-position: right bottom; 
+}
