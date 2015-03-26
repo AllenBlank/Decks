@@ -27,20 +27,25 @@ class CardsController < ApplicationController
     end
     
     def query_cards safe_params
+      
       cards = Card.where(newest: true).order(name: :asc)
-      if safe_params[:card_name].present?
-        terms = safe_params[:card_name].split(' ')
-        terms.each { |term| cards = cards.where("lower(name) LIKE ?", "%#{term.downcase}%") }
-      end
-      if safe_params[:card_text].present?
-        terms = safe_params[:card_text].split(' ')
-        terms.each { |term| cards = cards.where("lower(text) LIKE ?", "%#{term.downcase}%") }
-      end
+      cards = query_if(cards, safe_params[:card_name], 'name')
+      cards = query_if(cards, safe_params[:card_type], 'card_type')
+      cards = query_if(cards, safe_params[:card_text], 'text')
+      
       cards.paginate(page: params[:page], per_page: 10)
     end
     
+    def query_if (cards, param, column)
+      if param.present?
+        terms = param.gsub(',','').split(' ')
+        terms.each { |term| cards = cards.where("lower(#{column}) LIKE ?", "%#{term.downcase}%") }
+      end
+      cards
+    end
+    
     def search_params
-      params.permit(:card_name, :card_text)
+      params.permit(:card_name, :card_text, :card_type)
     end
     
 end

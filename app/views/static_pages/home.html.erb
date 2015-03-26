@@ -1,19 +1,31 @@
 <div id="search-container" class="row">
   <div id="search-field" class="col-md-4">
-    <h1>Search</h1>
-    
-    <%= form_tag cards_path, method: 'get', id: 'autocomplete-cards' do %>
+      <%= form_tag cards_path, method: 'get', id: 'autocomplete-cards' do %>
+        <div class='text-fields row'>
+          <div class='col-xs-10 col-xs-offset-1'>
+            <h1>Search</h1>
+            <%= autocomplete_field_tag :card_name, '', autocomplete_card_name_cards_path, 
+              'data-auto-focus' => true,
+              update_elements: {},
+              placeholder: 'Card Name'
+              
+            %>
+            <%= text_field_tag :card_text, nil, placeholder: "Card Text" %>
+            <%= text_field_tag :card_type, nil, placeholder: "Card Type" %>
+          </div>
+        </div>
+      <div class='row checkboxes'>
+        <div class='col-xs-1'></div>
+        <% ['White','Blue','Black','Red','Green'].each do |color| %>
+        <div class='col-xs-2'>
+          <h6><%= color %>:</h6>
+          <%= check_box_tag  color, 1 %>
+        </div>
+        <% end %>
+      </div>
       
-        <%= autocomplete_field_tag :card_name, '', autocomplete_card_name_cards_path, 
-          'data-auto-focus' => true,
-          update_elements: {},
-          placeholder: 'Card Name'
-          
-        %>
-        <%= text_field_tag :card_text, nil, placeholder: "Card Text" %>
-        <%= submit_tag "", id: 'search-submit', style: "display: none;" %>
+      <%= submit_tag "", id: 'search-submit', style: "display: none;" %>
     <% end %>
-   
   </div>
   <div id="card-preview"class="col-md-8">
     <%= render Card.find_by_name("Muddle the Mixture") %>
