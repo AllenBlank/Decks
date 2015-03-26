@@ -33,7 +33,7 @@ class CardsController < ApplicationController
       cards = query_if(cards, safe_params[:card_type], 'card_type')
       cards = query_if(cards, safe_params[:card_text], 'text')
       
-      cards.paginate(page: params[:page], per_page: 10)
+      cards.paginate(page: safe_params[:page], per_page: 10)
     end
     
     def query_if (cards, param, column)
@@ -45,7 +45,7 @@ class CardsController < ApplicationController
     end
     
     def search_params
-      params.permit(:card_name, :card_text, :card_type)
+      params.permit(:card_name, :card_text, :card_type, :page)
     end
     
 end

@@ -13,6 +13,7 @@ class Card < ActiveRecord::Base
   serialize :names
   serialize :supertypes
   serialize :variations
+  serialize :color_id
   
   def low_res_url
     #image_url 'low'

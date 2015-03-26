@@ -24,6 +24,7 @@ gem 'aws-sdk',              '~> 1'
 gem 'rails4-autocomplete'
 gem "jquery-ui-rails"
 gem 'jquery-cookie-rails'
+gem 'arel'
 
 gem 'sdoc',                    '0.4.0', group: :doc
 
