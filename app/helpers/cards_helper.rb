@@ -146,6 +146,7 @@ module CardsHelper
       search_str = fix_quotes search_str
       search_str = fix_naked_terms search_str
       search_str = fix_ands search_str
+      search_str.gsub!('LIKE', 'ILIKE') if Rails.env.production?
       query_hash = build_query search_str
       
       query.where( query_hash[:query], *query_hash[:args] )
