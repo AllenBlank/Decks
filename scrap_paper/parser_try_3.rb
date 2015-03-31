@@ -113,7 +113,7 @@ def fix_colors str
   str
 end
 
-search_str = '(o:transmute "muddle the mixture") ci!bug OR (vamp o:lifelink night) cmc>=2'
+search_str = '(o:transmute "muddle the mixture") OR (vamp o:lifelink night) cmc<=1'
 
 search_str = fix_quotes search_str
 search_str = fix_naked_terms search_str
@@ -122,4 +122,7 @@ search_str = fix_colors search_str
 search_str = fix_comparators search_str
 query_hash = fix_matches search_str
 
-Card.where( query_hash[:query], *query_hash[:vars] )
+results = Card.where( query_hash[:query], *query_hash[:vars] )
+results.each do |result|
+  puts result.name
+end

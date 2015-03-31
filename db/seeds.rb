@@ -36,6 +36,16 @@ Dir.foreach(path) do |file_name|
     new_card = Card.new
     new_card.update_attributes card_update_hash
     new_card.expansion = new_exp
+    
+    unless new_card.legalities.nil?
+      new_card.formats = []
+      new_card.legalities.each do |k,v|
+        if v == "Restricted" ||  v == "Legal"
+          new_card.formats << k
+        end
+      end
+    end
+    
     new_card.save
   end
 
@@ -78,6 +88,7 @@ end
 # add a color_id
 
 Card.update_all "color_id = colors"
+Card.where(color_id: nil).update_all(color_id: '')
 
 colors = { 
   "White" => ["{W","W}"], 
@@ -104,3 +115,4 @@ colors.each do |color, symbols|
     result.save
   end
 end
+

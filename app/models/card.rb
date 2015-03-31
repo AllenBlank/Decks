@@ -14,15 +14,19 @@ class Card < ActiveRecord::Base
   serialize :supertypes
   serialize :variations
   serialize :color_id
+  serialize :formats
+  serialize :legalities
   
   def low_res_url
+    api_url 'low'
     #image_url 'low'
-    DEFAULT_IMAGE_URL
+    #DEFAULT_IMAGE_URL
   end
   
   def high_res_url
+    api_url 'high'
     #image_url 'high'
-    DEFAULT_IMAGE_URL
+    #DEFAULT_IMAGE_URL
   end
   
   private
@@ -44,6 +48,11 @@ class Card < ActiveRecord::Base
           url = AWS_LOW_RES_URL
       end
       url + self.image_name + '.jpg'
+    end
+    
+    def api_url res
+      multiverse_id = self.multiverse_id.to_s
+      res == "high" ? REMOTE_HIGH_RES_URL + multiverse_id + '.jpg' : REMOTE_LOW_RES_URL + multiverse_id + '.jpeg'
     end
   
     def url_works url

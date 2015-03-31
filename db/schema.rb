@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150326181654) do
+ActiveRecord::Schema.define(version: 20150330202553) do
 
   create_table "cards", force: true do |t|
     t.text     "layout"
@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(version: 20150326181654) do
     t.boolean  "newest",        default: true
     t.boolean  "uploaded"
     t.text     "color_id"
+    t.text     "formats"
   end
 
   add_index "cards", ["expansion_id"], name: "index_cards_on_expansion_id"
