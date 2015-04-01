@@ -37,7 +37,7 @@ module CardsHelper
     
     def build_query str
       immune_terms = [')','(','AND','OR']
-      operators = /[:|!|>|<|=][:|=]?/
+      operators = /(!:|>=|<=|:|!|>|<|=)/
       color_types = /(c|ci)(:|!)/
       
       dictionary = {
@@ -49,7 +49,10 @@ module CardsHelper
         'tou' => ' "cards"."toughness" ',
         'cmc' => ' "cards"."cmc" ',
         ':'   => ' ILIKE ',
-        '!:'   => ' NOT ILIKE '
+        '!'   => ' NOT ILIKE ',
+        '!:'  => ' NOT ILIKE ',
+        'AND' => ' AND ',
+        'OR'  => ' OR '
       }
       args = []
       
@@ -58,8 +61,9 @@ module CardsHelper
         unless immune_terms.include? term
           if term.index(color_types) == 0
             term = build_color_query( term ) 
-          else
+          elsif term[operators]
             operator = term[operators]
+            #byebug
             parts = term.split(operators)
             parts.map! do |part|
               if dictionary.keys.include? part
@@ -71,7 +75,9 @@ module CardsHelper
               part
             end
             operator = dictionary[operator] if dictionary.keys.include? operator 
-            term = parts.join(" #{operator} ")
+            term = "#{parts.first} #{operator} #{parts.last}"
+          else
+            term = dictionary[term]
           end
         end
         term
@@ -113,25 +119,25 @@ module CardsHelper
         case mode
         when 'exclusive'
           if colors.include? color_letter 
-            color_query.concat "'cards'.'#{col}' ILIKE '%#{color_name}%' AND "
+            color_query.concat '"cards"."' + col + '" ILIKE ' + "'%#{color_name}%' AND "
           else
-            color_query.concat "'cards'.'#{col}' NOT ILIKE '%#{color_name}%' AND "
+            color_query.concat '"cards"."' + col + '" NOT ILIKE ' + "'%#{color_name}%' AND "
           end
         when 'inclusive'
           case col
           when 'colors'
             if colors.include? color_letter 
-              color_query.concat "'cards'.'#{col}' ILIKE '%#{color_name}%' OR "
+              color_query.concat '"cards"."' + col + '" ILIKE ' + "'%#{color_name}%' OR "
             end
           when 'color_id'
             unless colors.include? color_letter
-              color_query.concat "'cards'.'#{col}' NOT ILIKE '%#{color_name}%' AND"
+              color_query.concat '"cards"."' + col + '" NOT ILIKE ' + "'%#{color_name}%' AND "
             end
           end
         end
       end
       color_query.gsub!(/(AND|OR)\s*\z/, '')
-      "( #{color_query} )"
+      " (#{color_query}) "
     end
     
     def adv_query_by_prefix query, prefix, terms
