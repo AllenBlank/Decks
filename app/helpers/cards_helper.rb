@@ -48,8 +48,8 @@ module CardsHelper
         'pow' => ' "cards"."power" ',
         'tou' => ' "cards"."toughness" ',
         'cmc' => ' "cards"."cmc" ',
-        ':'   => ' LIKE ',
-        '!:'   => ' NOT LIKE '
+        ':'   => ' ILIKE ',
+        '!:'   => ' NOT ILIKE '
       }
       args = []
       
@@ -113,19 +113,19 @@ module CardsHelper
         case mode
         when 'exclusive'
           if colors.include? color_letter 
-            color_query.concat "'cards'.'#{col}' LIKE '%#{color_name}%' AND "
+            color_query.concat "'cards'.'#{col}' ILIKE '%#{color_name}%' AND "
           else
-            color_query.concat "'cards'.'#{col}' NOT LIKE '%#{color_name}%' AND "
+            color_query.concat "'cards'.'#{col}' NOT ILIKE '%#{color_name}%' AND "
           end
         when 'inclusive'
           case col
           when 'colors'
             if colors.include? color_letter 
-              color_query.concat "'cards'.'#{col}' LIKE '%#{color_name}%' OR "
+              color_query.concat "'cards'.'#{col}' ILIKE '%#{color_name}%' OR "
             end
           when 'color_id'
             unless colors.include? color_letter
-              color_query.concat "'cards'.'#{col}' NOT LIKE '%#{color_name}%' AND"
+              color_query.concat "'cards'.'#{col}' NOT ILIKE '%#{color_name}%' AND"
             end
           end
         end
@@ -146,7 +146,6 @@ module CardsHelper
       search_str = fix_quotes search_str
       search_str = fix_naked_terms search_str
       search_str = fix_ands search_str
-      search_str.gsub!('LIKE', 'ILIKE') if Rails.env.production?
       query_hash = build_query search_str
       
       query.where( query_hash[:query], *query_hash[:args] )
