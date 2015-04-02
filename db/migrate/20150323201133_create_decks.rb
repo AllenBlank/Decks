@@ -3,7 +3,7 @@ class CreateDecks < ActiveRecord::Migration
     create_table :decks do |t|
       t.integer :user_id
       t.string :format
-      t.integer :commander_id
+      t.integer :commander
       t.string :name
       t.text :description
 

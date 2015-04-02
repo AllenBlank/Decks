@@ -4,7 +4,7 @@ module CardsHelper
       str.gsub!('(', ' ( ')
       str.gsub!(')', ' ) ')
       arr = str.split(' ')
-      immune_regex = /\(|\)|AND|OR|NOT|(f|o|t|n|c|ci)(:|!)|(cmc|pow|tou)(>|<|=)/
+      immune_regex = /\(|\)|AND|OR|NOT|(f|r|o|t|n|c|ci)(:|!)|(cmc|pow|tou)(>|<|=)/
       arr.map! do |e|
         unless e.index(immune_regex) == 0
           e = "n:" + e
@@ -20,14 +20,14 @@ module CardsHelper
       while quoted[quote_regex]
         substr = quoted[quote_regex]
         index = quoted.index(quote_regex)
-        substr.gsub!('"', '$').gsub!(' ', '+')
+        substr.gsub!('"', '$').gsub!(' ', '%')
         quoted[index ... index + substr.length ] = substr
       end
       quoted
     end
     
     def re_quote quoted
-      quoted.gsub('$', '').gsub('+', ' ')
+      quoted.gsub('$', '').gsub('%', ' ')
     end
     
     def fix_ands str
@@ -45,6 +45,7 @@ module CardsHelper
         't'   => ' "cards"."card_type" ',
         'n'   => ' "cards"."name" ',
         'f'   => ' "cards"."formats" ',
+        'r'   => ' "cards"."rarity" ',
         'pow' => ' "cards"."power" ',
         'tou' => ' "cards"."toughness" ',
         'cmc' => ' "cards"."cmc" ',
@@ -66,10 +67,10 @@ module CardsHelper
             #byebug
             parts = term.split(operators)
             parts.map! do |part|
-              if dictionary.keys.include? part
+              if dictionary.keys.include?(part)
                 part = dictionary[part]
               else
-                args << part
+                args << part unless part[operators]
                 part = ' ? '
               end
               part
@@ -153,7 +154,7 @@ module CardsHelper
       search_str = fix_naked_terms search_str
       search_str = fix_ands search_str
       query_hash = build_query search_str
-      
+      #byebug
       query.where( query_hash[:query], *query_hash[:args] )
     end
     
