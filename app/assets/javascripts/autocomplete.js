@@ -1,19 +1,19 @@
 $(document).on('ready page:load', function() {
   $('#autocomplete-cards').bind('railsAutocomplete.select', Preview.autocompleteSelect );
+  
+  if(!$('body.controller-decks.action-edit').length) { return }
+  
   $('#autocomplete-cards').on("keypress", Autocomplete.onEnter);
-  
-  $('.card-list-item a').on('mouseover', Preview.cardMouseover );
-  
+  $('.card-list-item a').hoverIntent( Preview.cardMouseover );
   $('.add-remove-button').on('ajax:complete', Decklist.adjustComplete ); 
   
-});
+  $(document).on('deckListReloaded', function() {
+    $('.card-list-item a').on('mouseover', Preview.cardMouseover );
+  });
 
-$(document).on('deckListReloaded', function() {
-  $('.card-list-item a').on('mouseover', Preview.cardMouseover );
-});
-
-$(document).on('previewReloaded', function() {
-  $('.add-remove-button').on('ajax:complete', Decklist.adjustComplete ); 
+  $(document).on('previewReloaded', function() {
+    $('.add-remove-button').on('ajax:complete', Decklist.adjustComplete ); 
+  });
 });
 
 var Decklist = {
@@ -38,13 +38,12 @@ var Decklist = {
     });
   },
   fetchCompleted: function(data) {
-    console.log( JSON.stringify( data ) );
     Decklist.currentlyFetching = false;
     
     var html = data.responseJSON.partialHTML;
     $(Decklist.selector).html(html);
     $(document).trigger('deckListReloaded');
-    console.log('fetched!');
+    console.log('Decklist fetched!');
     
     if( Decklist.triedRecently ){
       Decklist.triedRecently = false;
@@ -117,7 +116,7 @@ var Autocomplete = {
       url: deckURL,
       dataType: "javascript",
       data: {add_card: cardID},
-      complete: function(data){ console.log('complete!');}
+      complete: function(data){ console.log('Card add complete!');}
     });
   },
   onEnter: function(e) {
@@ -133,16 +132,3 @@ var Autocomplete = {
     $('.add-remove-button').first().submit();
   }
 };
-
-
-function addCard(cardID, deckID) {
-  var deckURL = '/decks/' + deckID;
-  $.ajax({
-    method: "PATCH",
-    url: deckURL,
-    dataType: "javascript",
-    data: {add_card: cardID},
-    complete: function(data){ console.log('complete!');}
-  });
-}
-

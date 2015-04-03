@@ -37,7 +37,7 @@ class DecksController < ApplicationController
   end
 
   def update
-    if params[:add_card] || params[:remove_card]
+    if params[:add_remove]
       count = ( params[:full_set] ? 4 : 1 )
       count.times { add_or_remove_card }
     else
@@ -79,13 +79,16 @@ class DecksController < ApplicationController
       else
         list = @deck.cards
       end
-      
+      card = Card.find( params[:card] )
       if params[:add_card]
-        list << Card.find( params[:add_card] )
+        list << card
+      elsif params[:remove_all]
+        list.delete card
       else
-        card = Card.find( params[:remove_card] )
         if list.include? card
-          list -= list.where(id: card.id).first
+          c = list.count
+          list.delete(card)
+          (c - list.count - 1).times { list << card }
         end
       end
     end

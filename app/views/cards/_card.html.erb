@@ -12,7 +12,9 @@
     </div>
     <div class="col-sm-6 card-attr">
       <div class="text-center">
-        <%= render partial: "cards/add_remove_form", locals: { card: card} %>
+        <% if logged_in? && current_deck %>
+        <%= render( partial: "cards/add_remove_form", locals: { card: card} )%>
+        <% end %>
       </div>
       <table>
         <tr>

@@ -6,14 +6,18 @@
 </div>
 <div class="row">
   <div class="col-md-12">
-    <ul>
+      <table>
       <% sideboard.each do |card, count| %>
-        <li class="card-list-item" data-id="<%= card.id %>">
-          <% count > 1 ? postfix = " x#{count}" : postfix = "" %>
-          <%= link_to card.name + postfix, card %>
-        </li>
+        <tr>
+          <td class="card-count">
+            <%= "#{count}x"%>
+          </td>
+          <td class="card-list-item" data-id="<%= card.id %>">
+            <%= link_to card.name, card %>
+          </td>
+        </tr>
       <% end %>
-    </ul>
+      </table>
   </div>
 </div>
 <% end %>

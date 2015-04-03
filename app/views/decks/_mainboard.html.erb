@@ -7,14 +7,18 @@
       <% hash.each do |type,list| %>
         <div class="col-sm-6">
           <h4 class="type-heading"><%= type.pluralize + ":" %></h4>
-          <ul>
-            <% list.each do |card, count| %>
-              <li class="card-list-item" data-id="<%= card.id %>">
-                <% count > 1 ? postfix = " x#{count}" : postfix = "" %>
-                <%= link_to card.name + postfix, card %>
-              </li>
-            <% end %>
-          </ul>
+          <table>
+          <% list.each do |card, count| %>
+            <tr>
+              <td class="card-count">
+                <%= "#{count}x"%>
+              </td>
+              <td class="card-list-item" data-id="<%= card.id %>">
+                <%= link_to card.name, card %>
+              </td>
+            </tr>
+          <% end %>
+          </table>
         </div>
       <% end %>
     <% end %>  
