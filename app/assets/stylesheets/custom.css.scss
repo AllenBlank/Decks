@@ -18,9 +18,11 @@ body {
   a, a:hover {
     color: #333333;
   }
+  
   font-family: 'Bree Serif', serif;
   font-size: 16px;
-  // background-image: image-url("spatter.png");;
-  // background-repeat: no-repeat;
-  // background-position: right bottom; 
+  
+  .btn, .add-remove-button {
+    display: inline-block;
+  }
 }

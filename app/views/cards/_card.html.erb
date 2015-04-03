@@ -11,6 +11,9 @@
       <%= link_to image_tag( card.high_res_url ), card %>
     </div>
     <div class="col-sm-6 card-attr">
+      <div class="text-center">
+        <%= render partial: "cards/add_remove_form", locals: { card: card} %>
+      </div>
       <table>
         <tr>
           <th>Type:</th>

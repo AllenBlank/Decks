@@ -1,0 +1,1 @@
+json.partialHTML render partial: 'full_deck.html.erb'

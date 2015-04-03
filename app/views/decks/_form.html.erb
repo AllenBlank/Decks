@@ -1,4 +1,4 @@
-<%= form_for(@deck) do |f| %>
+<%= form_for(@deck, html: {class: 'deck-forms'}) do |f| %>
   <% if @deck.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@deck.errors.count, "error") %> prohibited this deck from being saved:</h2>

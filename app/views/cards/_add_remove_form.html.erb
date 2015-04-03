@@ -1,0 +1,15 @@
+<% buttons = { 
+  "+1 Deck" => {full_set: false, action: :add_card,    location: 'deck'},
+  "+4 Deck" => {full_set: true,  action: :add_card,    location: 'deck'}, 
+  "-1 Deck" => {full_set: false, action: :remove_card, location: 'deck'},
+  "+1 SB"   => {full_set: false, action: :add_card,    location: 'sideboard'},
+  "-1 SB"   => {full_set: false, action: :remove_card, location: 'sideboard'}, 
+} %>
+<% buttons.each do |text, setting| %>
+  <%= form_tag current_deck, method: 'patch', remote: true, class: "add-remove-button" do %>
+    <%= hidden_field_tag setting[:action], card.id %>
+    <%= hidden_field_tag :location, setting[:location] %>
+    <%= hidden_field_tag( :full_set, 1) if setting[:full_set] %>
+    <%= submit_tag text, class: "btn btn-xs btn-default" %>
+  <% end %>
+<% end %>

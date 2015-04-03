@@ -15,11 +15,10 @@ module SessionsHelper
 
   # Returns the current logged-in user (if any).
   def current_user
-    begin
-      @current_user = User.find(session[:user_id]) if session[:user_id]
-    rescue
+    if session[:user_id] && !User.where(id: session[:user_id]).empty?
+      @current_user = User.find(session[:user_id])
+    else
       log_out
-      return nil
     end
   end
 
@@ -49,8 +48,20 @@ module SessionsHelper
   
   # helper for my helper, kick user back to url, display error msg
   def bounce_chumps(msg, url=root_url)
-      flash[:danger] = msg
-      redirect_to root_url
+    flash[:danger] = msg
+    redirect_to root_url
+  end
+  
+  def current_deck
+    if session[:deck] && !Deck.where(id: session[:deck]).empty?
+      @current_deck = Deck.find(session[:deck])
+    else
+      nil
+    end
+  end
+  
+  def set_current_deck deck
+    session[:deck] = deck.id
   end
   
 end

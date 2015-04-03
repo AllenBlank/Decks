@@ -1,0 +1,22 @@
+<% types_array = counted_cards_by_type_array %>
+
+
+<% types_array.in_groups_of( 2, false ) do |card_row| %>
+  <div class="row">
+    <% card_row.each do |hash| %>
+      <% hash.each do |type,list| %>
+        <div class="col-sm-6">
+          <h4 class="type-heading"><%= type.pluralize + ":" %></h4>
+          <ul>
+            <% list.each do |card, count| %>
+              <li class="card-list-item" data-id="<%= card.id %>">
+                <% count > 1 ? postfix = " x#{count}" : postfix = "" %>
+                <%= link_to card.name + postfix, card %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+    <% end %>  
+  </div>
+<% end %>

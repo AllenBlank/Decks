@@ -13,7 +13,11 @@ class DecksController < ApplicationController
   end
 
   def show
-    respond_with(@deck)
+    respond_to do |format|
+      format.html { respond_with @deck }
+      format.js { render @deck }
+      format.json { render @deck }
+    end
   end
 
   def new
@@ -22,6 +26,7 @@ class DecksController < ApplicationController
   end
 
   def edit
+    set_current_deck @deck
   end
 
   def create
@@ -32,8 +37,21 @@ class DecksController < ApplicationController
   end
 
   def update
-    @deck.update(deck_params)
-    respond_with(@deck)
+    if params[:add_card] || params[:remove_card]
+      count = ( params[:full_set] ? 4 : 1 )
+      count.times { add_or_remove_card }
+    else
+      @deck.update_attributes(deck_params)
+    end
+    
+    @deck.save
+    
+    respond_to do |format|
+      format.html { redirect_to edit_deck_path(@deck) }
+      format.js { render @deck }
+      format.json { render @deck }
+    end
+
   end
 
   def destroy
@@ -47,10 +65,28 @@ class DecksController < ApplicationController
     end
 
     def deck_params
-      params.require(:deck).permit(:user_id, :format, :commander, :name, :description)
+      params.require(:deck).permit(:id, :user_id, :format, :commander, :name, :description)
     end
     
     def check_correct_user
       bounce_chumps "You're the wrong user for that." unless current_user == @deck.user || is_admin?
+    end
+    
+    def add_or_remove_card
+      case params[:location]
+      when 'sideboard'
+        list = @deck.sideboard.cards
+      else
+        list = @deck.cards
+      end
+      
+      if params[:add_card]
+        list << Card.find( params[:add_card] )
+      else
+        card = Card.find( params[:remove_card] )
+        if list.include? card
+          list -= list.where(id: card.id).first
+        end
+      end
     end
 end

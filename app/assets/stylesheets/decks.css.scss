@@ -1,12 +1,14 @@
 body.controller-decks {
-  input, textarea, select {
-    width: 100%;
-  }
-  .field {
-    margin-bottom: 1em;
-  }
-  textarea {
-    height: 6em;
+  .deck-forms {
+    input, textarea, select {
+      width: 100%;
+    }
+    .field {
+      margin-bottom: 1em;
+    }
+    textarea {
+      height: 6em;
+    }
   }
   .row ul {
     list-style-type: none;

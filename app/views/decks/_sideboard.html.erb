@@ -1,18 +1,19 @@
 <% sideboard = @deck.sideboard.cards %>
 <% unless sideboard.empty? %>
+<% sideboard = cards_by_count sideboard%>
 <div class="row">
   <div class="col-md-12" ><h1>Sideboard</h1></div>
 </div>
 <div class="row">
   <div class="col-md-12">
     <ul>
-      <% sideboard.each do |card| %>
+      <% sideboard.each do |card, count| %>
         <li class="card-list-item" data-id="<%= card.id %>">
-          <%= link_to card.name, card %>
+          <% count > 1 ? postfix = " x#{count}" : postfix = "" %>
+          <%= link_to card.name + postfix, card %>
         </li>
       <% end %>
     </ul>
   </div>
 </div>
-
 <% end %>
