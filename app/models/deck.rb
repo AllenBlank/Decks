@@ -1,4 +1,5 @@
 class Deck < ActiveRecord::Base
+  belongs_to :user
   has_one :sideboard
   has_and_belongs_to_many :cards
   before_create :add_sideboard

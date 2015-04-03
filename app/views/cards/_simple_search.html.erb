@@ -1,0 +1,17 @@
+<%= form_tag cards_path, method: 'get', id: 'autocomplete-cards' do %>
+<div class='text-fields row'>
+  <div class='col-xs-12'>
+    <h1>Search</h1>
+    <%= autocomplete_field_tag :adv, '', autocomplete_card_name_cards_path, 
+      'data-auto-focus' => true,
+      update_elements: {},
+      placeholder: "Card Name"
+    %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12 submit-button">
+    <%= submit_tag "Search!", id: 'search-submit' %>
+  </div>
+</div>
+<% end %>

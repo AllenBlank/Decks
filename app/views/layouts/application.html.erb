@@ -9,10 +9,10 @@
     <%= csrf_meta_tags %>
     <title>Diabolic Decks</title>
   </head>
-  <body class="body">
+  <body class="body controller-<%= params[:controller] %> action-<%= params[:action] %>">
 
       <%= render 'layouts/header' %>
-
+      
       <div class="content-area container">
         <%= render 'layouts/flash' %>
         <%= yield %>

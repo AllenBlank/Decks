@@ -1,5 +1,9 @@
 class DecksController < ApplicationController
+  before_action 
   before_action :set_deck, only: [:show, :edit, :update, :destroy]
+  before_action :check_logged_in, only: [:edit, :update, :destroy, :new]
+  before_action :check_correct_user, only: [:edit, :update, :destroy]
+  
 
   respond_to :html
 
@@ -22,8 +26,9 @@ class DecksController < ApplicationController
 
   def create
     @deck = Deck.new(deck_params)
+    @deck.user = current_user
     @deck.save
-    respond_with(@deck)
+    redirect_to edit_deck_path(@deck)
   end
 
   def update
@@ -43,5 +48,9 @@ class DecksController < ApplicationController
 
     def deck_params
       params.require(:deck).permit(:user_id, :format, :commander, :name, :description)
+    end
+    
+    def check_correct_user
+      bounce_chumps "You're the wrong user for that." unless current_user == @deck.user || is_admin?
     end
 end

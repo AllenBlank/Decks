@@ -10,27 +10,21 @@
       </ul>
     </div>
   <% end %>
-
+  
   <div class="field">
-    <%= f.label :user_id %><br>
-    <%= f.number_field :user_id %>
-  </div>
-  <div class="field">
-    <%= f.label :format %><br>
-    <%= f.text_field :format %>
-  </div>
-  <div class="field">
-    <%= f.label :commander %><br>
-    <%= f.number_field :commander %>
-  </div>
-  <div class="field">
-    <%= f.label :name %><br>
+    <%= f.label "Deck Name" %><br>
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :description %><br>
+    <%= f.label "Deck Description" %><br>
     <%= f.text_area :description %>
   </div>
+  <div class="field">
+    <%= f.label "Deck Format" %><br>
+    <% formats = [ "Commander", "Standard", "Legacy", "Vintage", "Modern" ] %>
+    <%= f.select :format, options_for_select(formats), prompt: "Deck Format" %>
+  </div>
+  
   <div class="actions">
     <%= f.submit %>
   </div>

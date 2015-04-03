@@ -1,0 +1,18 @@
+<% sideboard = @deck.sideboard.cards %>
+<% unless sideboard.empty? %>
+<div class="row">
+  <div class="col-md-12" ><h1>Sideboard</h1></div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <ul>
+      <% sideboard.each do |card| %>
+        <li class="card-list-item" data-id="<%= card.id %>">
+          <%= link_to card.name, card %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<% end %>

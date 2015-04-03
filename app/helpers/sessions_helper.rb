@@ -43,7 +43,7 @@ module SessionsHelper
   # same...
   def check_logged_in
     unless logged_in?
-      bounce_chumps "Please log in."
+      bounce_chumps "Please sign in."
     end
   end
   

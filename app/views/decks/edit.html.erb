@@ -1,6 +1,29 @@
-<h1>Editing Deck</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Show', @deck %> |
-<%= link_to 'Back', decks_path %>
+<div class="row">
+  <div class="col-md-12">
+    <h1>Editing "<%= @deck.name %>"</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>Deck List</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+      <%= render 'decks/deck_list' %>
+      <%= render 'decks/sideboard' %>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <%= render 'cards/simple_search' %>
+    <%= render 'cards/preview' %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12 col-md-10 col-md-offset-1">
+    <%= render 'form' %>
+  </div>
+</div>

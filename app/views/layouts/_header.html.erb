@@ -14,17 +14,20 @@
           <ul class="nav navbar-nav">
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">About</a></li>
+            <li><%= link_to "New Deck", new_deck_path %></li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Account <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
+                <% if logged_in? %>
+                <li><%= link_to "My Decks", '#' %></li>
+                <li><%= link_to "My Recent Searches", '#' %></li>
+                <li><%= link_to "My Profile", '#' %></li>
                 <li class="divider"></li>
-                <li class="dropdown-header">Nav header</li>
-                <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
+                <li><%= link_to "Sign out", signout_path %></li>
+                <% else %>
+                <li><%= link_to "Sign in with Facebook", facebook_signin_path %></li>
+                <li><%= link_to "Sign in with Google +", google_signin_path %></li>
+                <% end %>
               </ul>
             </li>
           </ul>

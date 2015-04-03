@@ -1,0 +1,19 @@
+body.controller-decks {
+  input, textarea, select {
+    width: 100%;
+  }
+  .field {
+    margin-bottom: 1em;
+  }
+  textarea {
+    height: 6em;
+  }
+  .row ul {
+    list-style-type: none;
+    padding-left: 1em;
+  }
+  .type-heading {
+    font-weight: bold;
+    margin-bottom: 0.2em;
+  }
+}

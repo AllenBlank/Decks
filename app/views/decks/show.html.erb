@@ -1,29 +1,23 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>User:</strong>
-  <%= @deck.user_id %>
-</p>
-
-<p>
-  <strong>Format:</strong>
-  <%= @deck.format %>
-</p>
-
-<p>
-  <strong>Commander:</strong>
-  <%= @deck.commander %>
-</p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @deck.name %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @deck.description %>
-</p>
-
-<%= link_to 'Edit', edit_deck_path(@deck) %> |
-<%= link_to 'Back', decks_path %>
+<div class="row">
+  <div class="col-md-12">
+    <h1><%= @deck.name %></h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>Deck List</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+      <%= render 'decks/deck_list' %>
+      <%= render 'decks/sideboard' %>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <%= render 'cards/preview' %>
+  </div>
+</div>
