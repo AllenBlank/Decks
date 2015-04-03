@@ -10,7 +10,7 @@ module SessionsHelper
   
   # Logs out the given user.
   def log_out
-    reset_session
+    session[:user_id] = nil
   end
 
   # Returns the current logged-in user (if any).
