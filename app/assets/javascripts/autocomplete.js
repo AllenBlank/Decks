@@ -8,7 +8,7 @@ $(document).on('ready page:load', function() {
   $('.add-remove-button').on('ajax:complete', Decklist.adjustComplete ); 
   
   $(document).on('deckListReloaded', function() {
-    $('.card-list-item a').on('mouseover', Preview.cardMouseover );
+    $('.card-list-item a').hoverIntent( Preview.cardMouseover );
   });
 
   $(document).on('previewReloaded deckListReloaded', function() {
@@ -129,6 +129,6 @@ var Autocomplete = {
   },
   triggerSubmit: function(){
     if($('.ui-menu-item').filter(':visible').length > 0 ) { return; }
-    $('.add-remove-button').first().submit();
+    $('#card-preview .add-remove-button').first().submit();
   }
 };
