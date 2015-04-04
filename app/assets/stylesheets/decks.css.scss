@@ -17,8 +17,19 @@ body.controller-decks {
   .type-heading {
     font-weight: bold;
     margin-bottom: 0.2em;
+    margin-left: 1em;
   }
   td.card-list-item, td.card-count {
     padding-left: 0.5em;
   }
+  .edit-form {
+    margin-top: 2em;
+  }
+  tr .card-list-buttons {
+    opacity: 0;
+  }
+  tr:hover .card-list-buttons {
+    opacity: 1;
+  }
+  
 }

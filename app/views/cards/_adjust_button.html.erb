@@ -1,0 +1,9 @@
+<%= form_tag current_deck, method: 'patch', remote: true, class: "add-remove-button" do %>
+  <%= hidden_field_tag :add_remove, 1 %>
+  <%= hidden_field_tag setting[:action], 1 %>
+  <%= hidden_field_tag :card, card.id %>
+  <%= hidden_field_tag :location, setting[:location] %>
+  <%= hidden_field_tag :full_set, 1 if setting[:full_set] %>
+  <% button_style = 'btn-danger' if setting[:action] == :remove_all %>
+  <%= submit_tag text, class: "btn btn-xs btn-default #{button_style}" %>
+<% end %>

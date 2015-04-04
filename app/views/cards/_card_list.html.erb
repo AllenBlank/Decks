@@ -1,0 +1,18 @@
+<table class="card-list">
+<% list.each do |card, count| %>
+  <tr>
+    <td class="card-list-buttons">
+      <%= render partial: 'cards/adjust_button.html.erb', locals: {
+        text: 'x', 
+        setting: {full_set: false, action: :remove_all, location: location}, 
+        card: card} %>
+    </td>
+    <td class="card-count">
+      <%= "#{count}x"%>
+    </td>
+    <td class="card-list-item" data-id="<%= card.id %>">
+      <%= link_to card.name, 'javascript:void(0)' %>
+    </td>
+  </tr>
+<% end %>
+</table>

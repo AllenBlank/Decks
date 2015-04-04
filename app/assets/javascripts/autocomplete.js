@@ -11,8 +11,8 @@ $(document).on('ready page:load', function() {
     $('.card-list-item a').on('mouseover', Preview.cardMouseover );
   });
 
-  $(document).on('previewReloaded', function() {
-    $('.add-remove-button').on('ajax:complete', Decklist.adjustComplete ); 
+  $(document).on('previewReloaded deckListReloaded', function() {
+    $('.add-remove-button').off('ajax:complete').on('ajax:complete', Decklist.adjustComplete ); 
   });
 });
 

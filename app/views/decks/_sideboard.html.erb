@@ -1,23 +1,12 @@
 <% sideboard = @deck.sideboard.cards %>
 <% unless sideboard.empty? %>
-<% sideboard = cards_by_count sideboard%>
+<% list = cards_by_count sideboard%>
 <div class="row">
   <div class="col-md-12" ><h1>Sideboard</h1></div>
 </div>
 <div class="row">
   <div class="col-md-12">
-      <table>
-      <% sideboard.each do |card, count| %>
-        <tr>
-          <td class="card-count">
-            <%= "#{count}x"%>
-          </td>
-          <td class="card-list-item" data-id="<%= card.id %>">
-            <%= link_to card.name, '#' %>
-          </td>
-        </tr>
-      <% end %>
-      </table>
+    <%= render partial: 'cards/card_list.html.erb', locals: {list: list, location: 'sideboard'} %>
   </div>
 </div>
 <% end %>

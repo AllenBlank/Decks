@@ -1,17 +1,10 @@
 <% buttons = { 
-  "+1 MB" => {full_set: false, action: :add_card,    location: 'deck'},
-  "+4 MB" => {full_set: true,  action: :add_card,    location: 'deck'}, 
-  "-1 MB" => {full_set: false, action: :remove_card, location: 'deck'},
+  "+1 MB" => {full_set: false, action: :add_card,    location: 'mainboard'},
+  "+4 MB" => {full_set: true,  action: :add_card,    location: 'mainboard'}, 
+  "-1 MB" => {full_set: false, action: :remove_card, location: 'mainboard'},
   "+1 SB" => {full_set: false, action: :add_card,    location: 'sideboard'},
   "-1 SB" => {full_set: false, action: :remove_card, location: 'sideboard'}, 
 } %>
 <% buttons.each do |text, setting| %>
-  <%= form_tag current_deck, method: 'patch', remote: true, class: "add-remove-button" do %>
-    <%= hidden_field_tag :add_remove, 1 %>
-    <%= hidden_field_tag setting[:action], 1 %>
-    <%= hidden_field_tag :card, card.id %>
-    <%= hidden_field_tag :location, setting[:location] %>
-    <%= hidden_field_tag :full_set, 1 if setting[:full_set] %>
-    <%= submit_tag text, class: "btn btn-xs btn-default" %>
-  <% end %>
+  <%= render partial: 'cards/adjust_button', locals: {text: text, setting: setting, card: card} %>
 <% end %>
