@@ -1,8 +1,10 @@
-<% sideboard = @deck.sideboard.cards %>
+<% sideboard = @deck.sideboard %>
 <% unless sideboard.empty? %>
 <% list = cards_by_count sideboard%>
 <div class="row">
-  <div class="col-md-12" ><h1>Sideboard</h1></div>
+  <div class="col-md-12" >
+    <h1>Sideboard</h1>
+  </div>
 </div>
 <div class="row">
   <div class="col-md-12">

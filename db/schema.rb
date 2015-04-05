@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150330202553) do
+ActiveRecord::Schema.define(version: 20150405052650) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "cards", force: true do |t|
     t.text     "layout"
@@ -59,25 +62,9 @@ ActiveRecord::Schema.define(version: 20150330202553) do
     t.text     "formats"
   end
 
-  add_index "cards", ["expansion_id"], name: "index_cards_on_expansion_id"
-  add_index "cards", ["name"], name: "index_cards_on_name"
-  add_index "cards", ["newest"], name: "index_cards_on_newest"
-
-  create_table "cards_decks", id: false, force: true do |t|
-    t.integer "card_id"
-    t.integer "deck_id"
-  end
-
-  add_index "cards_decks", ["card_id"], name: "index_cards_decks_on_card_id"
-  add_index "cards_decks", ["deck_id"], name: "index_cards_decks_on_deck_id"
-
-  create_table "cards_sideboards", id: false, force: true do |t|
-    t.integer "card_id"
-    t.integer "sideboard_id"
-  end
-
-  add_index "cards_sideboards", ["card_id"], name: "index_cards_sideboards_on_card_id"
-  add_index "cards_sideboards", ["sideboard_id"], name: "index_cards_sideboards_on_sideboard_id"
+  add_index "cards", ["expansion_id"], name: "index_cards_on_expansion_id", using: :btree
+  add_index "cards", ["name"], name: "index_cards_on_name", using: :btree
+  add_index "cards", ["newest"], name: "index_cards_on_newest", using: :btree
 
   create_table "decks", force: true do |t|
     t.integer  "user_id"
@@ -105,13 +92,31 @@ ActiveRecord::Schema.define(version: 20150330202553) do
     t.datetime "updated_at"
   end
 
-  create_table "sideboards", force: true do |t|
+  create_table "piles", force: true do |t|
+    t.integer  "card_id"
+    t.integer  "deck_id"
+    t.integer  "count"
+    t.string   "board"
+    t.text     "tags"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "deck_id"
   end
 
-  add_index "sideboards", ["deck_id"], name: "index_sideboards_on_deck_id"
+  add_index "piles", ["card_id"], name: "index_piles_on_card_id", using: :btree
+  add_index "piles", ["deck_id"], name: "index_piles_on_deck_id", using: :btree
+
+  create_table "synergies", force: true do |t|
+    t.integer  "pile_id"
+    t.integer  "compliment_id"
+    t.float    "power"
+    t.string   "type"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "synergies", ["compliment_id"], name: "index_synergies_on_compliment_id", using: :btree
+  add_index "synergies", ["pile_id", "compliment_id"], name: "index_synergies_on_pile_id_and_compliment_id", unique: true, using: :btree
+  add_index "synergies", ["pile_id"], name: "index_synergies_on_pile_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "provider"

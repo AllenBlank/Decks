@@ -1,8 +1,8 @@
 class Card < ActiveRecord::Base
   
   belongs_to :expansion
-  has_and_belongs_to_many :decks
-  has_and_belongs_to_many :sideboards
+  has_many :piles, dependent: :destroy
+  has_many :decks, through: :piles
   
   serialize :types
   serialize :colors

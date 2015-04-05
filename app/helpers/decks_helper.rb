@@ -1,6 +1,6 @@
 module DecksHelper
   def counted_cards_by_type_array
-    cards = @deck.cards.sort_by {|card| card.name}
+    cards = @deck.mainboard.sort_by {|card| card.name}
     
     types = cards_by_type( cards )
     

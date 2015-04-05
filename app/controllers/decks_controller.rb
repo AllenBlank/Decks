@@ -3,8 +3,6 @@ class DecksController < ApplicationController
   before_action :set_deck, only: [:show, :edit, :update, :destroy]
   before_action :check_logged_in, only: [:edit, :update, :destroy, :new]
   before_action :check_correct_user, only: [:edit, :update, :destroy]
-  
-
   respond_to :html
 
   def index
@@ -73,23 +71,13 @@ class DecksController < ApplicationController
     end
     
     def add_or_remove_card
-      case params[:location]
-      when 'sideboard'
-        list = @deck.sideboard.cards
-      else
-        list = @deck.cards
-      end
-      card = Card.find( params[:card] )
+      pile = @deck.piles.find_or_create_by( card_id: params[:card], board: params[:location] )
       if params[:add_card]
-        list << card
+        pile.update count: pile.count + 1
+      elsif params[:remove_card]
+        pile.update count: pile.count - 1 unless pile.count == 0
       elsif params[:remove_all]
-        list.delete card
-      else
-        if list.include? card
-          c = list.count
-          list.delete(card)
-          (c - list.count - 1).times { list << card }
-        end
+        pile.destroy
       end
     end
 end
