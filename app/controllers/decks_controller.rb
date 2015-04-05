@@ -19,8 +19,8 @@ class DecksController < ApplicationController
   end
 
   def new
-    @deck = Deck.new
-    respond_with(@deck)
+    @deck = Deck.create user_id: current_user.id
+    redirect_to edit_deck_path(@deck)
   end
 
   def edit
@@ -45,7 +45,7 @@ class DecksController < ApplicationController
     @deck.save
     
     respond_to do |format|
-      format.html { redirect_to edit_deck_path(@deck) }
+      format.html { redirect_to @deck }
       format.js { render @deck }
       format.json { render @deck }
     end

@@ -1,18 +1,40 @@
-<div class="row">
-  <div class="col-md-6">
-    <div class="row">
-      <div class="col-md-12 full-deck" data-id="<%= @deck.id %>">
-      <%= render 'decks/full_deck' %>
+<ul id="tabs" class="nav nav-tabs nav-justified" data-tabs="tabs">
+    <li class="active"><a href="#edit-step-1" data-toggle="tab">Step 1 (Add Cards)</a></li>
+    <li><a href="#edit-step-2" data-toggle="tab">Step 2 (Make Connections)</a></li>
+    <li><a href="#edit-step-3" data-toggle="tab">Step 3 (Describe)</a></li>
+</ul>
+
+<div id="edit-tabbed" class="tab-content">
+
+    <div class="tab-pane active" id="edit-step-1">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-12 full-deck" data-id="<%= @deck.id %>">
+            <%= render 'decks/full_deck' %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <%= render 'cards/simple_search' %>
+          <%= render 'cards/preview' %>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="col-md-6">
-    <%= render 'cards/simple_search' %>
-    <%= render 'cards/preview' %>
-  </div>
-</div>
-<div class="row edit-form">
-  <div class="col-sm-12 col-md-10 col-md-offset-1">
-    <%= render 'form' %>
-  </div>
+    
+    <div class="tab-pane" id="edit-step-2">
+      <h1>...</h1>
+      <p>woop woop woop woop</p>
+    </div>    
+    
+    <div class="tab-pane" id="edit-step-3">
+      <div class="row edit-form">
+        <div class="col-sm-12 col-md-10 col-md-offset-1">
+          <%= render 'form' %>
+        </div>
+      </div>
+    </div>
+    
+
+    
 </div>
