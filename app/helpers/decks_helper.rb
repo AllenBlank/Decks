@@ -1,26 +1,15 @@
 module DecksHelper
-  def counted_cards_by_type_array
-    cards = @deck.mainboard.sort_by {|card| card.name}
+  def piles_by_type_array
+    piles = @deck.mainboard
     
-    types = cards_by_type( cards )
-    
-    types.each do |type, card_list|
-      types[type] = cards_by_count( card_list )
-    end
-    
+    types = piles_by_type( piles )
+
     types_array = []
     types.each {|k,v| types_array << {k => v} }
     types_array
   end
   
-  def cards_by_count card_list
-    # Get rid of duplicate cards
-    counts_hash = Hash.new(0)
-    card_list.each {|card| counts_hash[card] +=1 }
-    counts_hash
-  end
-  
-  def cards_by_type card_list
+  def piles_by_type pile_list
     types = {
       "Creature" => [],
       "Instant" => [], 
@@ -33,16 +22,16 @@ module DecksHelper
     }
     
     # For each card, add it to the array of the type it first matches.
-    card_list.each do |card|
+    pile_list.each do |pile|
       sorted = false
       types.each do |type, list|
-        if card.card_type[type] && type != "Other"
-          types[type] << card
+        if pile.card_type[type] && type != "Other"
+          types[type] << pile
           sorted = true
           break
         end
       end
-      types["Other"] << card unless sorted
+      types["Other"] << pile unless sorted
     end
     
     # Get rid of types with no cards.

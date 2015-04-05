@@ -1,6 +1,5 @@
-<% sideboard = @deck.sideboard %>
-<% unless sideboard.empty? %>
-<% list = cards_by_count sideboard%>
+<% list = @deck.sideboard %>
+<% unless list.empty? %>
 <div class="row">
   <div class="col-md-12" >
     <h1>Sideboard</h1>
@@ -8,7 +7,7 @@
 </div>
 <div class="row">
   <div class="col-md-12">
-    <%= render partial: 'cards/card_list.html.erb', locals: {list: list, location: 'sideboard'} %>
+    <%= render partial: 'decks/pile_list.html.erb', locals: {list: list, location: 'sideboard'} %>
   </div>
 </div>
 <% end %>

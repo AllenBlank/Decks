@@ -77,7 +77,7 @@ class DecksController < ApplicationController
       elsif params[:remove_card]
         pile.update count: pile.count - 1 unless pile.count == 0
       elsif params[:remove_all]
-        pile.destroy
+        pile.update count: 0
       end
     end
 end

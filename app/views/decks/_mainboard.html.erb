@@ -1,16 +1,16 @@
 <div class="row">
   <div class="col-md-12">
-    <h1> Mainboard </h1>
+    <h1>Mainboard</h1>
   </div>
 </div>
-<% types_array = counted_cards_by_type_array %>
-<% types_array.in_groups_of( 2, false ) do |card_row| %>
+<% types_array = piles_by_type_array %>
+<% types_array.in_groups_of( 2, false ) do |type_row| %>
   <div class="row">
-    <% card_row.each do |hash| %>
+    <% type_row.each do |hash| %>
       <% hash.each do |type, list| %>
         <div class="col-sm-6">
           <h4 class="type-heading"><%= type.pluralize + ":" %></h4>
-            <%= render partial: 'cards/card_list.html.erb', locals: {list: list, location: 'mainboard' } %>
+            <%= render partial: 'decks/pile_list.html.erb', locals: {list: list, location: 'mainboard' } %>
         </div>
       <% end %>
     <% end %>  

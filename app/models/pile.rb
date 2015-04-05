@@ -15,8 +15,8 @@ class Pile < ActiveRecord::Base
   def name
     Card.find(self.card_id).name
   end
-  def types
-    Card.find(self.card_id).types
+  def card_type
+    Card.find(self.card_id).card_type
   end
   
   private
