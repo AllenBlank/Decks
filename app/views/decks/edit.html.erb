@@ -1,6 +1,6 @@
 <ul id="tabs" class="nav nav-tabs nav-justified" data-tabs="tabs">
     <li class="active"><a href="#edit-step-1" data-toggle="tab">Step 1 (Add Cards)</a></li>
-    <li><a href="#edit-step-2" data-toggle="tab">Step 2 (Make Connections)</a></li>
+    <li><a id="connections-tab" href="#edit-step-2" data-toggle="tab">Step 2 (Make Connections)</a></li>
     <li><a href="#edit-step-3" data-toggle="tab">Step 3 (Describe)</a></li>
 </ul>
 
@@ -23,8 +23,18 @@
     </div>
     
     <div class="tab-pane" id="edit-step-2">
-      <h1>...</h1>
-      <p>woop woop woop woop</p>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-12 synergies-deck full-deck" data-id="<%= @deck.id %>">
+            <%= render 'decks/full_deck' %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div id="cy-scalar"><div id="cy"></div></div>
+        </div>
+      </div>
     </div>    
     
     <div class="tab-pane" id="edit-step-3">
@@ -34,7 +44,5 @@
         </div>
       </div>
     </div>
-    
 
-    
 </div>

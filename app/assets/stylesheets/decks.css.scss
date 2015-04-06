@@ -31,5 +31,10 @@ body.controller-decks {
   tr:hover .card-list-buttons {
     opacity: 1;
   }
+  .synergies-deck {
+    tr:hover .card-list-buttons {
+      opacity: 0;
+    }
+  }
   
 }

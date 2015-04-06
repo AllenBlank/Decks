@@ -89,10 +89,10 @@ var Preview = {
     Preview.recentHTML = html;
     $(Preview.selector).fadeTo(300, 0, function(){
       $(Preview.selector).html( html );
-      $(Preview.selector + ' img').load(function(){
+      //$(Preview.selector + ' img').load(function(){
         $(Preview.selector).fadeTo(300, 1);
         $(document).trigger('previewReloaded');
-      });
+      //});
     });
   },
   cardMouseover: function() {
@@ -133,3 +133,5 @@ var Autocomplete = {
     $('#card-preview .add-remove-button').first().submit();
   }
 };
+
+
