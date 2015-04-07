@@ -1,12 +1,12 @@
 class Synergy < ActiveRecord::Base
   belongs_to :pile, class_name: "Pile"
   belongs_to :compliment, class_name: "Pile"
-  before_save :no_loopbacks
+  validate :no_loopbacks
   after_save :complete_link
   
   private
     def no_loopbacks
-      self.pile != self.compliment
+      errors.add(:pile, "pile can't be the same as compliment") if self.pile == self.compliment
     end
     
     def complete_link

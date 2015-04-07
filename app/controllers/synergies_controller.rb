@@ -1,19 +1,24 @@
 class SynergiesController < ApplicationController
   before_action :set_deck,  only: [:index]
-  before_action :set_piles, only: [:create, :destroy]
+  before_action :set_piles, only: [:destroy]
 
   def create
-    if params[:type] = "many-to-many"
-      @piles << @center_pile if @center_pile
-      @piles.each_with_index do |pile, i|
-        (i...piles.length).each do |j|
-          pile.compliments << piles[j]
+    ids = params[:pile_ids]
+    if params[:type] == "many-to-many"
+      ids << params[:center_pile]
+      ids.compact!
+      ids.each do |pile_id|
+        ids.each do |compliment_id|
+          Synergy.find_or_create_by(pile_id: pile_id, compliment_id: compliment_id)
         end
       end
     else
-      @piles.each {|pile| @center_pile.compliments << pile}
+      pile_id = params[:center_pile]
+      ids.each do |compliment_id|
+        Synergy.find_or_create_by(pile_id: pile_id, compliment_id: compliment_id)
+      end
     end
-      render json: {}
+    render json: {}
   end
 
   def destroy
@@ -23,14 +28,17 @@ class SynergiesController < ApplicationController
         pile.compliments.delete( compliment ) if pile.compliments.include? compliment
       end
     end
+    render json: {}
   end
 
   def index
     links = gen_unique_links
-    links = format_links links
-    piles_with_synergies = @deck.piles.reject {|pile| pile.compliments.empty? }
-    nodes = format_nodes piles_with_synergies
-    render json: {links: links, nodes: nodes}
+    links = clear_empty_piles links
+    piles = gen_piles_from_links links
+    
+    edges = format_links links
+    nodes = format_nodes piles
+    render json: {edges: edges, nodes: nodes}
   end
   
   private
@@ -41,12 +49,12 @@ class SynergiesController < ApplicationController
     
     def set_piles
       @piles = params[:pile_ids].map { |pile| Pile.find(pile) }
-      @center_pile = params[:center_pile] ? pile.find(params[:center_pile]) : nil 
+      @center_pile = params[:center_pile] ? Pile.find(params[:center_pile]) : nil 
     end
     
     def format_nodes piles
       piles.map do |pile|
-        id = pile.id
+        id = pile.id.to_s
         name = Card.find(pile.card_id).name
         { data: { id: id,  name: name } }
       end
@@ -54,8 +62,8 @@ class SynergiesController < ApplicationController
   
     def format_links links
       links.map do |link|
-        source = Pile.find( link[0] ).id
-        target = Pile.find( link[1] ).id
+        source = Pile.find( link[0] ).id.to_s
+        target = Pile.find( link[1] ).id.to_s
         { data: { source: source, target: target } }
       end
     end
@@ -71,4 +79,20 @@ class SynergiesController < ApplicationController
         end
       end
     end
+    
+    def clear_empty_piles links
+      links.reject do |link|
+        Pile.find(link[0]).count == 0 || Pile.find(link[1]).count == 0
+      end
+    end
+    
+    def gen_piles_from_links links
+      piles = []
+      links.each do |link|
+        piles << Pile.find(link[0])
+        piles << Pile.find(link[1])
+      end
+      piles.uniq
+    end
+    
 end

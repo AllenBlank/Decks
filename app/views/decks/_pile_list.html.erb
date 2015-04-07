@@ -10,7 +10,7 @@
     <td class="card-count">
       <%= "#{pile.count}x"%>
     </td>
-    <td class="card-list-item" data-id="<%= pile.card_id %>">
+    <td class="card-list-item" data-pile-id="<%= pile.id %>" data-id="<%= pile.card_id %>">
       <%= link_to pile.name, 'javascript:void(0)' %>
     </td>
   </tr>

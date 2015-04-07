@@ -19,6 +19,6 @@ Rails.application.routes.draw do
   
   resources :synergies, only: [:create]
   get '/decks/:deck_id/synergies', to: 'synergies#index'
-  delete '/synergies', to: 'synergies#delete'
+  delete '/synergies', to: 'synergies#destroy'
 
 end

@@ -1,11 +1,11 @@
 $(document).on('ready page:load', function() {
   $('#autocomplete-cards').bind('railsAutocomplete.select', Preview.autocompleteSelect );
+  $('#edit-step-1 .card-list-item a').hoverIntent( Preview.cardMouseover );
   
   if(!$('body.controller-decks.action-edit').length) { return }
   $('#tabs').tab();
   
   $('#autocomplete-cards').on("keypress", Autocomplete.onEnter);
-  $('.card-list-item a').hoverIntent( Preview.cardMouseover );
   $('.add-remove-button').on('ajax:complete', Decklist.adjustComplete ); 
   
   $(document).on('deckListReloaded', function() {

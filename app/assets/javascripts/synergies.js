@@ -1,6 +1,25 @@
+$(document).on('ready page:load', function(){
+  if(!$('body.controller-decks.action-edit').length) { return }
+  $('#connections-tab').on('click', function() {
+    if(synergiesGraph.cy){ return }
+    setTimeout( synergiesGraph.load, 500);
+  });
+  $( graphInterface.pileLinks ).on('click', graphInterface.pileClick );
+  $( '#many-to-one-btn' ).on('click', graphInterface.manyToOne );
+  $( '#many-to-many-btn' ).on('click', graphInterface.manyToMany );
+  $( '#remove-btn' ).on('click', graphInterface.remove );
+});
+
 var synergiesGraph = {
   cy: false,
   containerSelector: '#cy',
+  load: function() {
+    $.getJSON( "synergies", function( data ) {
+      synergiesGraph.nodes = data.nodes;
+      synergiesGraph.edges = data.edges;
+      synergiesGraph.init();
+    });
+  },
   init: function() {
     synergiesGraph.cy = cytoscape({
       container: $( synergiesGraph.containerSelector )[0],
@@ -10,13 +29,14 @@ var synergiesGraph = {
           .css({
             'content': 'data(name)',
             'text-valign': 'center',
-            'text-outline-width': 2,
-            'color': '#EEE',
+            'text-outline-width': 0,
+            'font-family': 'Bree Serif',
+            'color': '#333',
             'line-color': '#333',
-            'background-color': '#333',
-            'target-arrow-color': '#333',
-            'source-arrow-color': '#333',
-            'text-outline-color': '#333'
+            'background-color': '#EEE',
+            'target-arrow-color': '#CCC',
+            'source-arrow-color': '#CCC',
+            'text-outline-color': '#CCC'
           }),
       
       elements: {
@@ -28,7 +48,7 @@ var synergiesGraph = {
         name: 'springy',
       
         animate: true, // whether to show the layout as it's running
-        maxSimulationTime: 4000, // max length in ms to run the layout
+        maxSimulationTime: 6000, // max length in ms to run the layout
         ungrabifyWhileSimulating: false, // so you can't drag nodes during layout
         fit: true, // whether to fit the viewport to the graph
         padding: 30, // padding on fit
@@ -46,14 +66,8 @@ var synergiesGraph = {
     });
   },
   
-  edges: [
-    { data: { source: '1',  target: '2' } },
-    { data: { source: '2',  target: '1' } },
-  ],
-  nodes: [
-    { data: { id: '1',  name: 'One' } },
-    { data: { id: '2',  name: 'Two' } },
-  ],
+  edges: [],
+  nodes: [],
   
   // cy.on('tap', 'node', ontTap)
   onTap: function() {
@@ -62,10 +76,67 @@ var synergiesGraph = {
   
 };
 
-$(document).on('ready page:load', function(){
-  if(!$('body.controller-decks.action-edit').length) { return }
-  $('#connections-tab').on('click', function() {
-    if(synergiesGraph.cy){ return }
-    setTimeout( synergiesGraph.init, 500);
-  });
-});
+var graphInterface = {
+  pileLinks: '.synergies-deck .card-list-item a',
+  center: 'center-pile',
+  selected: 'selected-pile',
+  anyCenters: '.card-list-item .center-pile',
+  pileClick: function() {
+    var $link = $(this);
+    if($link.hasClass( graphInterface.center )){ 
+      // if the clicked link is a center
+      // make it normal
+      $link.removeClass( graphInterface.center ); 
+    } else if ( $link.hasClass( graphInterface.selected ) ) { 
+      // if it's selected,
+      // make it center, and make all other centers, selected
+      $link.removeClass( graphInterface.selected ); 
+      $( graphInterface.anyCenters ).
+        removeClass( graphInterface.center ).
+        addClass( graphInterface.selected );
+      $link.addClass( graphInterface.center );
+    } else {
+      // otherwise, make the link selected.
+      $link.addClass( graphInterface.selected ); 
+    }
+  },
+  selected_ids: function() {
+    var ids = [];
+    $('.' + graphInterface.selected).each(function(){
+      ids.push($(this).parent().data('pile-id'));
+    });
+    return ids;
+  },
+  center_id: function() {
+    return $('.' + graphInterface.center).
+      parent().
+      data('pile-id');
+  },
+  manyToMany: function() {
+    graphInterface.query('many-to-many', 'POST');
+  },
+  manyToOne: function() {
+    graphInterface.query('many-to-one', 'POST');
+  },
+  remove: function() {
+    graphInterface.query('', 'DELETE');
+  },
+  clearHighlighting: function() {
+    $(graphInterface.pileLinks).
+      removeClass(graphInterface.center).
+      removeClass(graphInterface.selected);
+  },
+  query: function(type, method) {
+    $.ajax({
+      method: method,
+      url: "/synergies",
+      dataType: "json",
+      data: {type: type, pile_ids: graphInterface.selected_ids(), center_pile: graphInterface.center_id() },
+      complete: function(data) {
+        synergiesGraph.load();
+      }
+    });
+    graphInterface.clearHighlighting();
+  }
+  
+};
