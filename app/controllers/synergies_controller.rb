@@ -4,25 +4,17 @@ class SynergiesController < ApplicationController
 
   def create
     ids = params[:pile_ids]
-    if params[:type] == "many-to-many"
-      ids << params[:center_pile]
-      ids.compact!
-      ids.each do |pile_id|
-        ids.each do |compliment_id|
-          Synergy.find_or_create_by(pile_id: pile_id, compliment_id: compliment_id)
-        end
-      end
-    else
-      pile_id = params[:center_pile]
+    ids.compact!
+    ids.each do |pile_id|
       ids.each do |compliment_id|
         Synergy.find_or_create_by(pile_id: pile_id, compliment_id: compliment_id)
       end
     end
+    
     render json: {}
   end
 
   def destroy
-    @piles << @center_pile if @center_pile
     @piles.each do |pile|
       @piles.each do |compliment|
         pile.compliments.delete( compliment ) if pile.compliments.include? compliment
@@ -49,7 +41,6 @@ class SynergiesController < ApplicationController
     
     def set_piles
       @piles = params[:pile_ids].map { |pile| Pile.find(pile) }
-      @center_pile = params[:center_pile] ? Pile.find(params[:center_pile]) : nil 
     end
     
     def format_nodes piles

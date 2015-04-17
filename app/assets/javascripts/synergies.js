@@ -6,9 +6,8 @@ $(document).on('ready page:load', function(){
     setTimeout( SynergiesGraph.load, 500);
   });
   $( GraphInterface.pileLinks ).on('click', GraphInterface.pileClick );
-  $( '#many-to-one-btn' ).on('click', GraphInterface.manyToOne );
-  $( '#many-to-many-btn' ).on('click', GraphInterface.manyToMany );
-  $( '#remove-btn' ).on('click', GraphInterface.remove );
+  $( '#create-links-btn' ).on('click', GraphInterface.create );
+  $( '#remove-links-btn' ).on('click', GraphInterface.remove );
 });
 
 var SynergiesGraph = {
@@ -80,23 +79,13 @@ var SynergiesGraph = {
 
 var GraphInterface = {
   pileLinks: '.synergies-deck .card-list-item a',
-  center: 'center-pile',
   selected: 'selected-pile',
-  anyCenters: '.card-list-item .center-pile',
   pileClick: function() {
     var $link = $(this);
-    if($link.hasClass( GraphInterface.center )){ 
-      // if the clicked link is a center
+    if($link.hasClass( GraphInterface.selected )){ 
+      // if the clicked link is selected
       // make it normal
-      $link.removeClass( GraphInterface.center ); 
-    } else if ( $link.hasClass( GraphInterface.selected ) ) { 
-      // if it's selected,
-      // make it center, and make all other centers, selected
       $link.removeClass( GraphInterface.selected ); 
-      $( GraphInterface.anyCenters ).
-        removeClass( GraphInterface.center ).
-        addClass( GraphInterface.selected );
-      $link.addClass( GraphInterface.center );
     } else {
       // otherwise, make the link selected.
       $link.addClass( GraphInterface.selected ); 
@@ -109,36 +98,25 @@ var GraphInterface = {
     });
     return ids;
   },
-  center_id: function() {
-    return $('.' + GraphInterface.center).
-      parent().
-      data('pile-id');
-  },
-  manyToMany: function() {
-    GraphInterface.query('many-to-many', 'POST');
-  },
-  manyToOne: function() {
-    GraphInterface.query('many-to-one', 'POST');
+  create: function() {
+    GraphInterface.query('POST');
   },
   remove: function() {
-    GraphInterface.query('', 'DELETE');
+    GraphInterface.query('DELETE');
   },
   clearHighlighting: function() {
-    $(GraphInterface.pileLinks).
-      removeClass(GraphInterface.center).
-      removeClass(GraphInterface.selected);
+    $(GraphInterface.pileLinks).removeClass(GraphInterface.selected);
   },
-  query: function(type, method) {
+  query: function(method) {
     $.ajax({
       method: method,
       url: "/synergies",
       dataType: "json",
-      data: {type: type, pile_ids: GraphInterface.selected_ids(), center_pile: GraphInterface.center_id() },
+      data: {pile_ids: GraphInterface.selected_ids() },
       complete: function(data) {
         SynergiesGraph.load();
       }
     });
     GraphInterface.clearHighlighting();
   }
-  
 };
