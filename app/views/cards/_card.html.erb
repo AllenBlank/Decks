@@ -2,7 +2,7 @@
   <div class="row">
     <div class="card-title col-sm-12">
       <h1>
-        <%= link_to card.name, card%>
+        <%= link_to card.name, card %>
       </h1>
     </div>
   </div>
@@ -11,11 +11,9 @@
       <%= link_to image_tag( card.high_res_url ), card %>
     </div>
     <div class="col-sm-6 card-attr">
-      <div class="text-center">
-        <% if logged_in? && current_deck %>
-        <%= render( partial: "cards/add_remove_form", locals: { card: card} )%>
-        <% end %>
-      </div>
+      <% if logged_in? && current_deck %>
+      <%= render( partial: "cards/add_remove_form", locals: { card: card} )%>
+      <% end %>
       <table>
         <tr>
           <th>Type:</th>

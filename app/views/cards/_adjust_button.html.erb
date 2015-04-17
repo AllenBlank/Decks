@@ -4,6 +4,18 @@
   <%= hidden_field_tag :card, card.id %>
   <%= hidden_field_tag :location, setting[:location] %>
   <%= hidden_field_tag :full_set, 1 if setting[:full_set] %>
-  <% button_style = 'btn-danger' if setting[:action] == :remove_all %>
-  <%= submit_tag text, class: "btn btn-xs btn-default #{button_style}" %>
+  <% 
+    case setting[:action] 
+    when :remove_all
+      button_style = 'btn-danger'
+    when :add_card
+      button_style = 'btn-success'
+    when :remove_card
+      button_style = 'btn-danger'
+    else
+      button_style = "btn-default"
+    end
+  
+  %>
+  <%= submit_tag text, class: "btn btn-xs #{button_style}" %>
 <% end %>

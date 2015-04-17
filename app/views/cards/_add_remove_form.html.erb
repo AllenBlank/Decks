@@ -1,10 +1,26 @@
 <% buttons = { 
-  "+1 MB" => {full_set: false, action: :add_card,    location: 'mainboard'},
-  "+4 MB" => {full_set: true,  action: :add_card,    location: 'mainboard'}, 
-  "-1 MB" => {full_set: false, action: :remove_card, location: 'mainboard'},
-  "+1 SB" => {full_set: false, action: :add_card,    location: 'sideboard'},
-  "-1 SB" => {full_set: false, action: :remove_card, location: 'sideboard'}, 
+  "+1" => {full_set: false, action: :add_card,    location: ''},
+  "+4" => {full_set: true,  action: :add_card,    location: ''}, 
+  "-1" => {full_set: false, action: :remove_card, location: ''},
 } %>
-<% buttons.each do |text, setting| %>
-  <%= render partial: 'cards/adjust_button', locals: {text: text, setting: setting, card: card} %>
-<% end %>
+
+<table>
+  <tr>
+    <th>Main:</th>
+    <td>
+      <% buttons.each do |text, setting| 
+        setting[:location] = "mainboard" %>
+        <%= render partial: 'cards/adjust_button', locals: {text: text, setting: setting, card: card} %>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <th>Side:</th>
+    <td>
+      <% buttons.each do |text, setting| 
+        setting[:location] = "sideboard" %>
+        <%= render partial: 'cards/adjust_button', locals: {text: text, setting: setting, card: card} %>
+      <% end %>
+    </td>
+  </tr>
+</table>
