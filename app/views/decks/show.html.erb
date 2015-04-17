@@ -6,17 +6,21 @@
 <div class="row">
   <div class="col-md-6">
     <div class="row">
-      <div class="col-md-12">
-        <h1>Deck List</h1>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-12 full-deck show-deck" data-id="<%= @deck.id %>">
       <%= render 'decks/full_deck' %>
       </div>
     </div>
   </div>
   <div class="col-md-6">
     <%= render 'cards/preview' %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">      
+    <h3>Description:</h3>
+    <p><%= @deck.description %></p>
+    <h3>Format:</h3>
+    <p><%= @deck.format %></p>
+    <div id="cy-scalar"><div id="cy"></div></div>
   </div>
 </div>

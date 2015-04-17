@@ -1,6 +1,7 @@
 $(document).on('ready page:load', function() {
   $('#autocomplete-cards').bind('railsAutocomplete.select', Preview.autocompleteSelect );
   $('#edit-step-1 .card-list-item a').hoverIntent( Preview.cardMouseover );
+  $('.show-deck .card-list-item a').hoverIntent( Preview.cardMouseover );
   
   if(!$('body.controller-decks.action-edit').length) { return }
   $('#tabs').tab();
@@ -29,7 +30,7 @@ var Decklist = {
     }
   },
   fetch: function() {
-    var deckURL = '/decks/' + $(Decklist.selector).data('id');
+    var deckURL = Decklist.deckURL();
     $.ajax({
       method: "GET",
       url: deckURL,
@@ -53,6 +54,9 @@ var Decklist = {
   },
   adjustComplete: function(e, data, status, xhr) {
     Decklist.refresh();
+  },
+  deckURL: function() {
+    return '/decks/' + $(Decklist.selector).data('id');
   }
 };
 

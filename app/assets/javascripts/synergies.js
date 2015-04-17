@@ -1,28 +1,30 @@
 $(document).on('ready page:load', function(){
+  if($('body.controller-decks.action-show').length) { SynergiesGraph.load(); }
   if(!$('body.controller-decks.action-edit').length) { return }
   $('#connections-tab').on('click', function() {
-    if(synergiesGraph.cy){ return }
-    setTimeout( synergiesGraph.load, 500);
+    if(SynergiesGraph.cy){ return }
+    setTimeout( SynergiesGraph.load, 500);
   });
-  $( graphInterface.pileLinks ).on('click', graphInterface.pileClick );
-  $( '#many-to-one-btn' ).on('click', graphInterface.manyToOne );
-  $( '#many-to-many-btn' ).on('click', graphInterface.manyToMany );
-  $( '#remove-btn' ).on('click', graphInterface.remove );
+  $( GraphInterface.pileLinks ).on('click', GraphInterface.pileClick );
+  $( '#many-to-one-btn' ).on('click', GraphInterface.manyToOne );
+  $( '#many-to-many-btn' ).on('click', GraphInterface.manyToMany );
+  $( '#remove-btn' ).on('click', GraphInterface.remove );
 });
 
-var synergiesGraph = {
+var SynergiesGraph = {
   cy: false,
   containerSelector: '#cy',
   load: function() {
-    $.getJSON( "synergies", function( data ) {
-      synergiesGraph.nodes = data.nodes;
-      synergiesGraph.edges = data.edges;
-      synergiesGraph.init();
+    var synergiesURL =  Decklist.deckURL() + '/synergies';
+    $.getJSON( synergiesURL, function( data ) {
+      SynergiesGraph.nodes = data.nodes;
+      SynergiesGraph.edges = data.edges;
+      SynergiesGraph.init();
     });
   },
   init: function() {
-    synergiesGraph.cy = cytoscape({
-      container: $( synergiesGraph.containerSelector )[0],
+    SynergiesGraph.cy = cytoscape({
+      container: $( SynergiesGraph.containerSelector )[0],
       
       style: cytoscape.stylesheet()
         .selector('node')
@@ -40,8 +42,8 @@ var synergiesGraph = {
           }),
       
       elements: {
-        nodes: synergiesGraph.nodes,
-        edges: synergiesGraph.edges,
+        nodes: SynergiesGraph.nodes,
+        edges: SynergiesGraph.edges,
       },
       
       layout: {
@@ -76,67 +78,67 @@ var synergiesGraph = {
   
 };
 
-var graphInterface = {
+var GraphInterface = {
   pileLinks: '.synergies-deck .card-list-item a',
   center: 'center-pile',
   selected: 'selected-pile',
   anyCenters: '.card-list-item .center-pile',
   pileClick: function() {
     var $link = $(this);
-    if($link.hasClass( graphInterface.center )){ 
+    if($link.hasClass( GraphInterface.center )){ 
       // if the clicked link is a center
       // make it normal
-      $link.removeClass( graphInterface.center ); 
-    } else if ( $link.hasClass( graphInterface.selected ) ) { 
+      $link.removeClass( GraphInterface.center ); 
+    } else if ( $link.hasClass( GraphInterface.selected ) ) { 
       // if it's selected,
       // make it center, and make all other centers, selected
-      $link.removeClass( graphInterface.selected ); 
-      $( graphInterface.anyCenters ).
-        removeClass( graphInterface.center ).
-        addClass( graphInterface.selected );
-      $link.addClass( graphInterface.center );
+      $link.removeClass( GraphInterface.selected ); 
+      $( GraphInterface.anyCenters ).
+        removeClass( GraphInterface.center ).
+        addClass( GraphInterface.selected );
+      $link.addClass( GraphInterface.center );
     } else {
       // otherwise, make the link selected.
-      $link.addClass( graphInterface.selected ); 
+      $link.addClass( GraphInterface.selected ); 
     }
   },
   selected_ids: function() {
     var ids = [];
-    $('.' + graphInterface.selected).each(function(){
+    $('.' + GraphInterface.selected).each(function(){
       ids.push($(this).parent().data('pile-id'));
     });
     return ids;
   },
   center_id: function() {
-    return $('.' + graphInterface.center).
+    return $('.' + GraphInterface.center).
       parent().
       data('pile-id');
   },
   manyToMany: function() {
-    graphInterface.query('many-to-many', 'POST');
+    GraphInterface.query('many-to-many', 'POST');
   },
   manyToOne: function() {
-    graphInterface.query('many-to-one', 'POST');
+    GraphInterface.query('many-to-one', 'POST');
   },
   remove: function() {
-    graphInterface.query('', 'DELETE');
+    GraphInterface.query('', 'DELETE');
   },
   clearHighlighting: function() {
-    $(graphInterface.pileLinks).
-      removeClass(graphInterface.center).
-      removeClass(graphInterface.selected);
+    $(GraphInterface.pileLinks).
+      removeClass(GraphInterface.center).
+      removeClass(GraphInterface.selected);
   },
   query: function(type, method) {
     $.ajax({
       method: method,
       url: "/synergies",
       dataType: "json",
-      data: {type: type, pile_ids: graphInterface.selected_ids(), center_pile: graphInterface.center_id() },
+      data: {type: type, pile_ids: GraphInterface.selected_ids(), center_pile: GraphInterface.center_id() },
       complete: function(data) {
-        synergiesGraph.load();
+        SynergiesGraph.load();
       }
     });
-    graphInterface.clearHighlighting();
+    GraphInterface.clearHighlighting();
   }
   
 };

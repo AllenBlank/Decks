@@ -18,14 +18,14 @@ class Card < ActiveRecord::Base
   serialize :legalities
   
   def low_res_url
-    api_url 'low'
-    #image_url 'low'
+    #api_url 'low'
+    image_url 'low'
     #DEFAULT_IMAGE_URL
   end
   
   def high_res_url
-    api_url 'high'
-    #image_url 'high'
+    #api_url 'high'
+    image_url 'high'
     #DEFAULT_IMAGE_URL
   end
   
