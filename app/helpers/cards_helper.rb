@@ -145,7 +145,7 @@ module CardsHelper
       prefix = prefix.to_s
       terms = fix_quotes terms
       terms = terms.split(' ')
-      terms.map! {|term| prefix + term }
+      terms.map! {|term| prefix + "'#{term}'" } #quote it up to prevent confusion w/ numbers.
       adv_query query, terms.join(' ')
     end
     
