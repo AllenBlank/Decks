@@ -1,0 +1,9 @@
+<tr>
+  <% 
+    byebug
+    #parameters = search.parameters
+    #parameters.each {|k,v| k = k.to_sym}
+  %>
+  <td><%= link_to search.name, cards_path(search.parameters) %></td>
+  <td>...<%= time_ago_in_words search.updated_at %> ago.</td>
+</tr>

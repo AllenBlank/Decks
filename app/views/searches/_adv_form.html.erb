@@ -1,18 +1,18 @@
 <div id="search-field">
-    <%= form_tag cards_path, method: 'get', id: 'autocomplete-cards' do %>
+    <%= form_for @search, html: { id: 'autocomplete-cards'} do |f| %>
     <div class='text-fields row'>
       <div class='col-xs-10 col-xs-offset-1'>
         <h1>Search</h1>
-        <%= autocomplete_field_tag :n, '', autocomplete_card_name_cards_path, 
+        <%= f.autocomplete_field :name_field, autocomplete_card_name_searches_path, {
           'data-auto-focus' => true,
           update_elements: {},
-          placeholder: "Card Name"
+          placeholder: "Card Name" }
         %>
-        <%= text_field_tag :o, nil, placeholder: "Card Text" %>
-        <%= text_field_tag :t, nil, placeholder: "Card Types" %>
+        <%= f.text_field :text_field, placeholder: "Card Text" %>
+        <%= f.text_field :type_field, placeholder: "Card Types" %>
         <% formats = [ "Commander", "Standard", "Legacy", "Vintage", "Modern" ] %>
-        <%= select_tag :f, options_for_select(formats), prompt: "Card Format" %>
-        <%= text_field_tag :adv, nil, placeholder: "(o:transmute t!:creature) c!u cmc=2" %>
+        <%= f.select :format_field, options_for_select(formats), prompt: "Card Format" %>
+        <%= f.text_field :advanced_field, placeholder: "(o:transmute t!:creature) c!u cmc=2" %>
       </div>
       <div class="col-xs-1"></div>
     </div>
@@ -27,7 +27,12 @@
       <% ['White','Blue','Black','Red','Green'].each do |color| %>
       <div class='col-xs-2'>
         <h6><%= color %>:</h6>
-        <%= check_box_tag  color, 1 %>
+        <%
+        unless @search.colors.nil?
+          checked = @search.colors.include? color 
+        end
+        %>
+        <%= check_box :search, :colors, {multiple: true, checked: checked}, color, nil %>
       </div>
       <% end %>
       <div class='col-xs-1'></div>
@@ -36,15 +41,14 @@
       <div class='col-xs-1'></div>
       <div class='col-xs-2 exclusive'>
         <h6>Exact?</h6>
-        <%= check_box_tag  'exact_id', 1 %>
+        <%= f.check_box :exact_field, {}, true, nil %>
       </div>
       <div class='col-xs-9'></div>
     </div>
     <div class="row">
       <div class="col-xs-10 col-xs-offset-1 submit-button">
-        <%= submit_tag "Search!", id: 'search-submit' %>
+        <%= f.submit "Search!", id: 'search-submit' %>
       </div>
     </div>
-    
   <% end %>
 </div>

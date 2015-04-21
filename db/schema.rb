@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150405052650) do
+ActiveRecord::Schema.define(version: 20150420193742) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -104,6 +104,23 @@ ActiveRecord::Schema.define(version: 20150405052650) do
 
   add_index "piles", ["card_id"], name: "index_piles_on_card_id", using: :btree
   add_index "piles", ["deck_id"], name: "index_piles_on_deck_id", using: :btree
+
+  create_table "searches", force: true do |t|
+    t.text     "parameters"
+    t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.text     "name_field"
+    t.text     "text_field"
+    t.text     "type_field"
+    t.text     "format_field"
+    t.text     "advanced_field"
+    t.text     "colors"
+    t.boolean  "exact_field"
+  end
+
+  add_index "searches", ["user_id"], name: "index_searches_on_user_id", using: :btree
 
   create_table "synergies", force: true do |t|
     t.integer  "pile_id"

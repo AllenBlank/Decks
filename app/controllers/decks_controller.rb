@@ -1,6 +1,6 @@
 class DecksController < ApplicationController
-  before_action 
   before_action :set_deck, only: [:show, :edit, :update, :destroy]
+  before_action :set_cards, only: [:show, :edit]
   before_action :check_logged_in, only: [:edit, :update, :destroy, :new]
   before_action :check_correct_user, only: [:edit, :update, :destroy]
   respond_to :html
@@ -60,6 +60,10 @@ class DecksController < ApplicationController
   private
     def set_deck
       @deck = Deck.find(params[:id])
+    end
+    
+    def set_cards
+      @cards = @deck.cards if (@deck.cards && @deck.cards.count > 0)
     end
 
     def deck_params

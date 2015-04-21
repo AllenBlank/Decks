@@ -1,0 +1,24 @@
+<%= will_paginate @cards, inner_window: 1, outer_window: 1, previous_label: '←', next_label: '→'  %>
+
+<div class="container">
+<% @cards.in_groups_of( 2, false) do |card_row| %>
+  <div class="row">
+  <% card_row.each do |card| %>
+    <div class="col-sm-6">
+      <%= render card %>
+    </div>
+  <% end %>
+  </div>
+<% end %>
+</div>
+
+<%= will_paginate @cards, inner_window: 1, outer_window: 1, previous_label: '←', next_label: '→'  %>
+
+<div id="search-container" class="row">
+  <div class="col-md-4">
+    <%= render 'adv_form' %>
+  </div>
+  <div class="col-md-8">
+    <%= render 'cards/preview' %>
+  </div>
+</div>

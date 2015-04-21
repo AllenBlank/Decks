@@ -1,0 +1,11 @@
+<div class="text-center">
+  <table class="searches-table">
+    <tr>
+      <th>Results:</th>
+      <th>Last Searched:</th>
+    </tr>
+    <% @searches.each do |search| %>
+    <%= render search %>
+    <% end %>
+  </table>
+</div>
