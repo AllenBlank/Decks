@@ -70,6 +70,7 @@ var SynergiesGraph = {
         damping: 0.5
       }
     });
+    SynergiesGraph.cy.boxSelectionEnabled( true ); // fix scrolling problems.
   },
   
   edges: [],
