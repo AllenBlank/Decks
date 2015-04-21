@@ -11,7 +11,7 @@
         <%= f.text_field :text_field, placeholder: "Card Text" %>
         <%= f.text_field :type_field, placeholder: "Card Types" %>
         <% formats = [ "Commander", "Standard", "Legacy", "Vintage", "Modern" ] %>
-        <%= f.select :format_field, options_for_select(formats), prompt: "Card Format" %>
+        <%= f.select :format_field, options_for_select(formats, @search.format_field), prompt: "Card Format" %>
         <%= f.text_field :advanced_field, placeholder: "(o:transmute t!:creature) c!u cmc=2" %>
       </div>
       <div class="col-xs-1"></div>
@@ -44,6 +44,15 @@
         <%= f.check_box :exact_field, {}, true, nil %>
       </div>
       <div class='col-xs-9'></div>
+    </div>
+    <div class="row">
+      <div class="col-xs-10 col-xs-offset-1">
+          <% directions = ["Ascending", "Descending"] %>
+          <% sortables = ["Name", "CMC", "Power", "Toughness"] %>
+          <h3>Order</h3>
+          <%= f.select :sort_by_field, options_for_select(sortables, @search.sort_by_field) %>
+          <%= f.select :sort_direction_field, options_for_select(directions, @search.sort_direction_field) %>
+      </div>
     </div>
     <div class="row">
       <div class="col-xs-10 col-xs-offset-1 submit-button">

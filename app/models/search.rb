@@ -4,6 +4,12 @@ class Search < ActiveRecord::Base
   serialize :parameters
   serialize :colors
   
+  def initialize attributes={}
+    super
+    self.sort_by_field ||= "Name"
+    self.sort_direction_field ||= "Ascending"
+  end
+  
   def cards
     query = Card.where(newest: true)
 
@@ -11,7 +17,7 @@ class Search < ActiveRecord::Base
     query = build_color_query query
     query = build_advanced_query query
     
-    query
+    order_query query
   end
   
   private
@@ -53,6 +59,13 @@ class Search < ActiveRecord::Base
       end
       query = q.adv_query_by_prefix(query, ci_prefix, color_query) unless color_query.empty?
       query
+    end
+    
+    def order_query query
+      attribute = self.sort_by_field.downcase.to_sym
+      direction = (self.sort_direction_field == "Ascending") ? :asc : :desc
+      #byebug
+      query.order( attribute => direction )
     end
   
 end

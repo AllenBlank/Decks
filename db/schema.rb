@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150420193742) do
+ActiveRecord::Schema.define(version: 20150421181205) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -109,8 +109,8 @@ ActiveRecord::Schema.define(version: 20150420193742) do
     t.text     "parameters"
     t.string   "name"
     t.integer  "user_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
     t.text     "name_field"
     t.text     "text_field"
     t.text     "type_field"
@@ -118,6 +118,8 @@ ActiveRecord::Schema.define(version: 20150420193742) do
     t.text     "advanced_field"
     t.text     "colors"
     t.boolean  "exact_field"
+    t.string   "sort_by_field"
+    t.string   "sort_direction_field"
   end
 
   add_index "searches", ["user_id"], name: "index_searches_on_user_id", using: :btree

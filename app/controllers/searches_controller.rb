@@ -31,9 +31,8 @@ class SearchesController < ApplicationController
   end
   
   def show
-    @cards = @search.cards.
-                     order( name: :asc ).
-                     paginate(page: params[:page], per_page: 10)
+    @cards = @search.cards.paginate(page: params[:page], per_page: 10)
+    
     redirect_to @cards.first if @cards.count == 1
   end
   
@@ -53,7 +52,15 @@ class SearchesController < ApplicationController
     end
     
     def search_params
-      params.require(:search).permit( :name_field, :text_field, :type_field, :format_field, :advanced_field, :exact_field, colors: [] )
+      params.require(:search).permit( :name_field, 
+                                      :text_field, 
+                                      :type_field, 
+                                      :format_field, 
+                                      :advanced_field, 
+                                      :exact_field, 
+                                      :sort_by_field,
+                                      :sort_direction_field,
+                                      colors: [] )
     end
   
     def check_logged_in

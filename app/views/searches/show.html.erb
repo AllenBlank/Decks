@@ -1,4 +1,8 @@
-<%= will_paginate @cards, inner_window: 1, outer_window: 1, previous_label: '←', next_label: '→'  %>
+<div class="row">
+  <div class="col-md-12">
+    <%= will_paginate @cards, inner_window: 1, outer_window: 1, previous_label: '←', next_label: '→'  %>
+  </div>
+</div>
 
 <div class="container">
 <% @cards.in_groups_of( 2, false) do |card_row| %>
@@ -11,8 +15,11 @@
   </div>
 <% end %>
 </div>
-
-<%= will_paginate @cards, inner_window: 1, outer_window: 1, previous_label: '←', next_label: '→'  %>
+<div class="row">
+  <div class="col-md-12">
+    <%= will_paginate @cards, inner_window: 1, outer_window: 1, previous_label: '←', next_label: '→'  %>
+  </div>
+</div>
 
 <div id="search-container" class="row">
   <div class="col-md-4">
