@@ -27,8 +27,16 @@ class Card < ActiveRecord::Base
   
   private
     def image_url res
-      return DEFAULT_IMAGE_URL unless self.uploaded 
-      url = (res == 'high' ? AWS_HIGH_RES_URL : AWS_LOW_RES_URL )
-      url + self.image_name + '.jpg'
+      if self.uploaded 
+        url = (res == 'high' ? AWS_HIGH_RES_URL : AWS_LOW_RES_URL )
+        url + self.image_name + '.jpg'
+      else
+        doppleganger = Card.where(name: self.name, uploaded: true).first
+        if doppleganger
+          doppleganger.send(:image_url, res)
+        else
+          DEFAULT_IMAGE_URL
+        end
+      end
     end
 end
