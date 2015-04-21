@@ -1,35 +1,14 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Listing Decks</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>User</th>
-      <th>Format</th>
-      <th>Commander</th>
-      <th>Name</th>
-      <th>Description</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @decks.each do |deck| %>
-      <tr>
-        <td><%= deck.user_id %></td>
-        <td><%= deck.format %></td>
-        <td><%= deck.commander %></td>
-        <td><%= deck.name %></td>
-        <td><%= deck.description %></td>
-        <td><%= link_to 'Show', deck %></td>
-        <td><%= link_to 'Edit', edit_deck_path(deck) %></td>
-        <td><%= link_to 'Destroy', deck, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
+<h1><%= @user.name %>'s Decks</h1>
+<h5>(<%= @user.decks.count %> total)</h5>
+<%= will_paginate @decks, inner_window: 1, outer_window: 1, previous_label: '←', next_label: '→'  %>
+<table class="partials-table">
+  <tr>
+    <th>Name:</th>
+    <th>Format:</th>
+    <th>Last updated:</th>
+  </tr>
+  <% @decks.each do |deck| %>
+    <%= render deck %>
+  <% end %>
 </table>
-
-<br>
-
-<%= link_to 'New Deck', new_deck_path %>
+<%= will_paginate @decks, inner_window: 1, outer_window: 1, previous_label: '←', next_label: '→'  %>

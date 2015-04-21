@@ -8,7 +8,10 @@ class SearchesController < ApplicationController
   end
   
   def index
-    @searches = current_user.searches.order(updated_at: :desc)
+    @user = User.find( params[:user_id] )
+    @searches = @user.searches.
+                       order(updated_at: :desc).
+                       paginate(page: params[:page], per_page: 10)
   end
   
   def new

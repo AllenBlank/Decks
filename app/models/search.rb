@@ -20,6 +20,14 @@ class Search < ActiveRecord::Base
     order_query query
   end
   
+  def name
+    unless self.cards.count == 0
+      self.cards.first.name + ', ' + self.cards.last.name
+    else
+      "No results..."
+    end
+  end
+  
   private
   
     def build_advanced_query query

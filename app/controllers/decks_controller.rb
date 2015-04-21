@@ -6,8 +6,10 @@ class DecksController < ApplicationController
   respond_to :html
 
   def index
-    @decks = Deck.all
-    respond_with(@decks)
+    @user = User.find( params[:user_id] )
+    @decks = @user.decks.
+                    order(updated_at: :desc).
+                    paginate(page: params[:page], per_page: 10)
   end
 
   def show

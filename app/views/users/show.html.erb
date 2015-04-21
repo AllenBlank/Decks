@@ -1,0 +1,38 @@
+<div class="row">
+  <div class="col-md-12">
+    <h1><%= @user.name %></h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <h3>First signed in:</h3>
+    <p><%= time_ago_in_words @user.created_at %> ago.</p>
+    <h3><%= link_to "Deck count:", decks_index_path(@user.id) %></h3>
+    <p><%= @user.decks.count %></p>
+    <h3><%= link_to "Search count:", searches_index_path(@user.id) %></h3>
+    <p><%= @user.searches.count %></p>
+  </div>
+  <div class="col-md-6">
+    <h3><%= link_to "Decks:", decks_index_path(@user.id) %></h3>
+    <table class="partials-table">
+      <tr>
+        <th>Name:</th>
+        <th>Format:</th>
+        <th>Last updated:</th>
+      </tr>
+      <% @decks.each do |deck| %>
+        <%= render deck %>
+      <% end %>
+    </table>
+    <h3><%= link_to "Searches:", searches_index_path(@user.id) %></h3>
+    <table class="partials-table">
+      <tr>
+        <th>Results:</th>
+        <th>Last updated:</th>
+      </tr>
+      <% @searches.each do |search| %>
+        <%= render search %>
+      <% end %>
+    </table>
+  </div>
+</div>

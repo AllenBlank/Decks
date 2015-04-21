@@ -9,9 +9,12 @@ Rails.application.routes.draw do
   get 'signin/facebook', to: redirect('auth/facebook'), as: 'facebook_signin'
   get 'signin/google', to: redirect('auth/google_oauth2'), as: 'google_signin'
   
-  resources :decks
   resources :cards, only: [:show] 
+  resources :users, only: [:show]
   resources :expansions, only: [:index, :show]
+  
+  resources :decks, only: [:show, :new, :create, :update, :edit, :destroy]
+  get '/users/:user_id/decks', to: 'decks#index', as: 'decks_index'
   
   resources :synergies, only: [:create]
   get '/decks/:deck_id/synergies', to: 'synergies#index'
@@ -20,6 +23,6 @@ Rails.application.routes.draw do
   resources :searches, only: [:new, :create, :update, :show, :destroy] do
     get :autocomplete_card_name, :on => :collection
   end
-  get '/users/:user_id/searches', to: 'searches#index'
+  get '/users/:user_id/searches', to: 'searches#index', as: 'searches_index'
 
 end

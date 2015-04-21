@@ -1,11 +1,13 @@
-<div class="text-center">
-  <table class="searches-table">
-    <tr>
-      <th>Results:</th>
-      <th>Last Searched:</th>
-    </tr>
-    <% @searches.each do |search| %>
+<h1><%= @user.name %>'s Searches</h1>
+<h5>(<%= @user.searches.count %> total)</h5>
+<%= will_paginate @searches, inner_window: 1, outer_window: 1, previous_label: '←', next_label: '→'  %>
+<table class="partials-table">
+  <tr>
+    <th>Results:</th>
+    <th>Last updated:</th>
+  </tr>
+  <% @searches.each do |search| %>
     <%= render search %>
-    <% end %>
-  </table>
-</div>
+  <% end %>
+</table>
+<%= will_paginate @searches, inner_window: 1, outer_window: 1, previous_label: '←', next_label: '→'  %>
