@@ -5,9 +5,14 @@ $(document).on('ready page:load', function(){
     if(SynergiesGraph.cy){ return }
     setTimeout( SynergiesGraph.load, 500);
   });
-  $( GraphInterface.pileLinks ).on('click', GraphInterface.pileClick );
+  
   $( '#create-links-btn' ).on('click', GraphInterface.create );
   $( '#remove-links-btn' ).on('click', GraphInterface.remove );
+  
+  $( GraphInterface.pileLinks ).on('click', GraphInterface.pileClick );
+  $(document).on('deckListReloaded', function() {
+    $( GraphInterface.pileLinks ).on('click', GraphInterface.pileClick );
+  });
 });
 
 var SynergiesGraph = {
