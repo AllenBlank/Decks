@@ -25,7 +25,7 @@ class SearchesController < ApplicationController
     current_user.searches << @search if logged_in?
 
     msg = "Found #{ ActionController::Base.helpers.pluralize(@search.cards.count, 'card') }."
-    (@cards.count > 0) ? flash[:success] = msg : flash[:danger] = msg
+    (@search.cards.count > 0) ? flash[:success] = msg : flash[:danger] = msg
     
     redirect_to @search
   end
