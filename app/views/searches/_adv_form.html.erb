@@ -23,8 +23,12 @@
       </div>
     </div>
     <div class='row checkboxes'>
-      <div class='col-xs-1'></div>
+      <div class='col-xs-1'>
+        <% #to allow for an update with no colors. %>
+        <%= f.hidden_field :colors, {value: '', multiple: true} %>
+      </div>
       <% ['White','Blue','Black','Red','Green'].each do |color| %>
+      
       <div class='col-xs-2'>
         <h6><%= color %>:</h6>
         <%
@@ -32,7 +36,7 @@
           checked = @search.colors.include? color 
         end
         %>
-        <%= check_box :search, :colors, {multiple: true, checked: checked}, color, nil %>
+        <%= f.check_box :colors, {multiple: true, checked: checked}, color, nil %>
       </div>
       <% end %>
       <div class='col-xs-1'></div>
@@ -41,6 +45,7 @@
       <div class='col-xs-1'></div>
       <div class='col-xs-2 exclusive'>
         <h6>Exact?</h6>
+        <%= f.hidden_field :exact_field, {value: false} %>
         <%= f.check_box :exact_field, {}, true, nil %>
       </div>
       <div class='col-xs-9'></div>
