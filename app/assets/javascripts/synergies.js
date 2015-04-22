@@ -71,6 +71,7 @@ var SynergiesGraph = {
       }
     });
     SynergiesGraph.cy.boxSelectionEnabled( true ); // fix scrolling problems.
+    SynergiesGraph.cy.on('tap', 'node', GraphInterface.onNodeTap);
   },
   
   edges: [],
@@ -124,5 +125,9 @@ var GraphInterface = {
       }
     });
     GraphInterface.clearHighlighting();
+  },
+  onNodeTap: function() {
+    var name = this.data('name');
+    $(GraphInterface.pileLinks + ":contains('" + name + "')").click();
   }
 };

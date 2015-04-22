@@ -1,6 +1,7 @@
 <div class="row">
   <div class="col-md-12">
     <h1>Mainboard</h1>
+    <h5><%= pluralize @deck.cards_count("mainboard"), "card" %>.</h5>
   </div>
 </div>
 <% types_array = piles_by_type_array %>

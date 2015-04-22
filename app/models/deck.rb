@@ -4,6 +4,11 @@ class Deck < ActiveRecord::Base
   has_many :cards, through: :piles
   has_many :synergies, through: :piles
   
+  def cards_count board=nil
+    piles = (board ? self.piles.where(board: board) : self.piles )
+    piles.pluck(:count).sum
+  end
+  
   def mainboard_cards *columns
     fetch_board "mainboard", *columns
   end
