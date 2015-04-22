@@ -1,5 +1,5 @@
 <tr>
-  <td><%= link_to (deck.name || "No name"), deck %></td>
+  <td><%= link_to (deck.name || "No name"), (current_user == deck.user ? edit_deck_path(deck) : deck ) %></td>
   <td><%= deck.format || "No format" %></td>
   <td><%= (time_ago_in_words deck.updated_at).capitalize %> ago.</td>
 </tr>

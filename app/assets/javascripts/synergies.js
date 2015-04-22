@@ -1,20 +1,3 @@
-$(document).on('ready page:load', function(){
-  if($('body.controller-decks.action-show').length) { SynergiesGraph.load(); }
-  if(!$('body.controller-decks.action-edit').length) { return }
-  $('#connections-tab').on('click', function() {
-    if(SynergiesGraph.cy){ return }
-    setTimeout( SynergiesGraph.load, 500);
-  });
-  
-  $( '#create-links-btn' ).on('click', GraphInterface.create );
-  $( '#remove-links-btn' ).on('click', GraphInterface.remove );
-  
-  $( GraphInterface.pileLinks ).on('click', GraphInterface.pileClick );
-  $(document).on('deckListReloaded', function() {
-    $( GraphInterface.pileLinks ).on('click', GraphInterface.pileClick );
-  });
-});
-
 var SynergiesGraph = {
   cy: false,
   containerSelector: '#cy',
@@ -71,6 +54,7 @@ var SynergiesGraph = {
       }
     });
     SynergiesGraph.cy.boxSelectionEnabled( true ); // fix scrolling problems.
+    SynergiesGraph.cy.zoomingEnabled( false );
     SynergiesGraph.cy.on('tap', 'node', GraphInterface.onNodeTap);
   },
   

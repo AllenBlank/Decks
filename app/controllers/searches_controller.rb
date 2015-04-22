@@ -71,7 +71,7 @@ class SearchesController < ApplicationController
     end
     
     def check_correct_user
-      bounce_chumps "You're the wrong user." unless @search.user == current_user
+      bounce_chumps "You can't do that to another user's search." unless @search.user == current_user
     end
     
 end

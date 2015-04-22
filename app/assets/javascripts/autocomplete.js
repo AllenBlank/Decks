@@ -1,23 +1,3 @@
-$(document).on('ready page:load', function() {
-  $('#autocomplete-cards').bind('railsAutocomplete.select', Preview.autocompleteSelect );
-  $('#edit-step-1 .card-list-item a').hoverIntent( Preview.cardMouseover );
-  $('.show-deck .card-list-item a').hoverIntent( Preview.cardMouseover );
-  
-  if(!$('body.controller-decks.action-edit').length) { return }
-  $('#tabs').tab();
-  
-  $('#autocomplete-cards').on("keypress", Autocomplete.onEnter);
-  $('.add-remove-button').on('ajax:complete', Decklist.adjustComplete ); 
-  
-  $(document).on('deckListReloaded', function() {
-    $('.card-list-item a').hoverIntent( Preview.cardMouseover );
-  });
-
-  $(document).on('previewReloaded deckListReloaded', function() {
-    $('.add-remove-button').off('ajax:complete').on('ajax:complete', Decklist.adjustComplete ); 
-  });
-});
-
 var Decklist = {
   selector: '.full-deck',
   currentlyFetching: false,
@@ -43,9 +23,10 @@ var Decklist = {
     Decklist.currentlyFetching = false;
     
     var html = data.responseJSON.partialHTML;
-    $(Decklist.selector).html(html);
+    $(Decklist.selector).html(html).fadeTo(500, 0.2, function(){
+      $(this).fadeTo(500, 1);
+    });
     $(document).trigger('deckListReloaded');
-    console.log('Decklist fetched!');
     
     if( Decklist.triedRecently ){
       Decklist.triedRecently = false;
