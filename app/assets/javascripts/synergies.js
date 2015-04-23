@@ -48,7 +48,7 @@ var SynergiesGraph = {
         stop: undefined, // callback on layoutstop
       
         // springy forces
-        stiffness: 300,
+        stiffness: 400,
         repulsion: 400,
         damping: 0.5
       }
