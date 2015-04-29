@@ -10,6 +10,9 @@ class Pile < ActiveRecord::Base
                           dependent:   :destroy
   has_many :compliments, through: :synergies,  source: :compliment
   
+  has_many :tag_pins, dependent: :destroy
+  has_many :tags, through: :tag_pins
+  
   before_save :set_defaults
   
   def name

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150421224605) do
+ActiveRecord::Schema.define(version: 20150429173408) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -134,6 +134,27 @@ ActiveRecord::Schema.define(version: 20150421224605) do
   add_index "synergies", ["compliment_id"], name: "index_synergies_on_compliment_id", using: :btree
   add_index "synergies", ["pile_id", "compliment_id"], name: "index_synergies_on_pile_id_and_compliment_id", unique: true, using: :btree
   add_index "synergies", ["pile_id"], name: "index_synergies_on_pile_id", using: :btree
+
+  create_table "tag_pins", force: true do |t|
+    t.integer  "tag_id"
+    t.integer  "pile_id"
+    t.integer  "deck_id"
+    t.integer  "synergy_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tag_pins", ["deck_id"], name: "index_tag_pins_on_deck_id", using: :btree
+  add_index "tag_pins", ["pile_id"], name: "index_tag_pins_on_pile_id", using: :btree
+  add_index "tag_pins", ["synergy_id"], name: "index_tag_pins_on_synergy_id", using: :btree
+  add_index "tag_pins", ["tag_id"], name: "index_tag_pins_on_tag_id", using: :btree
+
+  create_table "tags", force: true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "users", force: true do |t|
     t.string   "provider"

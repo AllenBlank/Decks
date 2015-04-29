@@ -4,6 +4,9 @@ class Deck < ActiveRecord::Base
   has_many :cards, through: :piles
   has_many :synergies, through: :piles
   
+  has_many :tag_pins, dependent: :destroy
+  has_many :tags, through: :tag_pins
+  
   def cards_count board=nil
     piles = (board ? self.piles.where(board: board) : self.piles )
     piles.pluck(:count).sum
